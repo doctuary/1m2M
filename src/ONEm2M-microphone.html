@@ -4,6 +4,7 @@
   <template>
     <button on-tap="captureAudio">Get Audio</button>
     <canvas id="visualizer" width="640" height="160"></canvas>
+    <p id="pulseCounter"></p>
   </template>
 
   <script>
@@ -17,12 +18,11 @@
         analyser.maxDecibels = -10;
         analyser.smoothingTimeConstant = 0.85;
 
-        //var distortion = audioCtx.createWaveShaper();
-        //var gainNode = audioCtx.createGain();
-        //var biquadFilter = audioCtx.createBiquadFilter();
-
         var canvas = this.$.visualizer;
         var canvasContext = canvas.getContext("2d");
+
+        var pulseCounter = this.$.pulseCounter;
+        var pulseCount = 0;
 
         var drawVisual;
 
@@ -41,6 +41,11 @@
             drawVisual = requestAnimationFrame(draw);
 
             analyser.getByteFrequencyData(dataArray);
+
+            if (pulseDetected(dataArray)) {
+              pulseCount++;
+              pulseCounter.innerHTML = pulseCount;
+            }
 
             canvasContext.fillStyle = 'rgb(0, 0, 0)';
             canvasContext.fillRect(0, 0, WIDTH, HEIGHT);
@@ -62,16 +67,22 @@
           draw();
         }
 
+        var priorVolume;
+        function pulseDetected(amplitudeData) {
+          var currentVolume = 0;
+          for (var i = 0; i < amplitudeData.length; i++) {
+            currentVolume += amplitudeData[i];
+          }
+          var isVolumeHigher = currentVolume > priorVolume;
+          priorVolume = currentVolume;
+          return isVolumeHigher;
+        }
+
         navigator.mediaDevices.getUserMedia({audio: true}).then(function(mediaStream) {
           console.log("streamId: " + mediaStream.id);
           console.log("audioTrackId: " + mediaStream.getAudioTracks()[0].id);
           source = audioCtx.createMediaStreamSource(mediaStream);
           source.connect(analyser);
-          //analyser.connect(distortion);
-          //distortion.connect(biquadFilter);
-          //biquadFilter.connect(gainNode);
-          //gainNode.connect(audioCtx.destination);
-          //console.log(gainNode.gain.value);
 
           visualize();
           
