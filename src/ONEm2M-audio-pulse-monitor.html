@@ -1,15 +1,33 @@
+<!--Polymer Imports-->
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-slider/paper-slider.html">
 
-<dom-module id="ONEm2M-microphone">
+<dom-module id="ONEm2M-audio-pulse-monitor">
   <template>
+    <paper-slider min="2500" max="7500" value="{{threshold}}"></paper-slider>
     <button on-tap="captureAudio">Get Audio</button>
-    <canvas id="visualizer" width="640" height="160"></canvas>
-    <p id="pulseCounter"></p>
+    </br>
+    <canvas id="visualizer" width="640" height="160"></canvas>    
+    <p id="pulseCounter"></p>    
   </template>
 
   <script>
     Polymer({
-      is: 'ONEm2M-microphone',
+      is: 'ONEm2M-audio-pulse-monitor',
+
+      properties: {
+        threshold: {
+          type: Number,
+          notify: true,
+          reflectToAttribute: true,
+          value: 5000,          
+          observer: "_thresholdChanged"
+        }
+      },
+
+      _thresholdChanged: function(val) {
+        console.log(val); //may need to use this to signal updating of metronome volume
+      },
 
       captureAudio: function() {
         var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -43,8 +61,10 @@
             analyser.getByteFrequencyData(dataArray);
 
             if (pulseDetected(dataArray)) {
-              pulseCount++;
-              pulseCounter.innerHTML = pulseCount;
+              if (getVolume(dataArray) > 3000) {
+                pulseCount++;
+                pulseCounter.innerHTML = pulseCount + " : " + getVolume(dataArray);
+              }
             }
 
             canvasContext.fillStyle = 'rgb(0, 0, 0)';
@@ -67,15 +87,23 @@
           draw();
         }
 
-        var priorVolume;
-        function pulseDetected(amplitudeData) {
-          var currentVolume = 0;
+        function getVolume(amplitudeData) {
+          var volume = 0;
           for (var i = 0; i < amplitudeData.length; i++) {
-            currentVolume += amplitudeData[i];
+            volume += amplitudeData[i];
           }
-          var isVolumeHigher = currentVolume > priorVolume;
+          return volume;
+        }
+
+        var priorVolume = 0;
+        var priorVolumeDirection;
+        function pulseDetected(amplitudeData) {
+          var currentVolume = getVolume(amplitudeData);          
+          var volumeDirection = (currentVolume > priorVolume) ? "ascending" : "descending";
+          var peakFound = priorVolumeDirection == "ascending" && volumeDirection == "descending";
           priorVolume = currentVolume;
-          return isVolumeHigher;
+          priorVolumeDirection = volumeDirection;
+          return peakFound;
         }
 
         navigator.mediaDevices.getUserMedia({audio: true}).then(function(mediaStream) {
