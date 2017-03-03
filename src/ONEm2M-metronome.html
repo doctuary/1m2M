@@ -1,9 +1,11 @@
 <!--Polymer Imports-->
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-slider/paper-slider.html">
 
 <dom-module id="ONEm2M-metronome">
   <template>
-    <button on-tap="toggleMetronome">Start Metronome</button>    
+    <button on-tap="play">Start Metronome</button>
+    <paper-slider min="30" max="160" value="{{tempo}}"></paper-slider>  
   </template>
 
   <script>
@@ -52,7 +54,7 @@
             type: Number,
             notify: true,
             reflectToAttribute: true,
-            value: 120.0
+            value: 60.0
         },
         timerWorker: {
             type: Object,
@@ -69,6 +71,16 @@
       //Lifecycle callbacks
       attached: function() {
           this.audioContext = new AudioContext();
+          this.timerWorker = new Worker("src/metronomeworker.js");
+          this.timerWorker.onmessage = function(e) {
+              if (e.data == "tick") {
+                  //console.log("tick!");
+                  this.scheduler();
+                } else {
+                    console.log("message: " + e.data);
+                }
+            }.bind(this);
+          this.timerWorker.postMessage({"interval": this.lookahead});
       },
 
       nextNote: function() {
@@ -145,17 +157,7 @@
           //var notesInQueue = [];      // the notes that have been put into the web audio,
                                     // and may or may not have played yet. {note, time}
           //var timerWorker = null;     // The Web Worker used to fire timer messages
-        this.timerWorker = new Worker("src/metronomeworker.js");
-        var that = this;
-        this.timerWorker.onmessage = function(e) {
-            if (e.data == "tick") {
-                console.log("tick!");
-                that.scheduler();
-            }
-            else
-                console.log("message: " + e.data);
-        };
-        this.timerWorker.postMessage({"interval": this.lookahead});
+        
         this.play();
       }
     });
