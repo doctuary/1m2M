@@ -1,6 +1,7 @@
 <!--Polymer Imports-->
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-slider/paper-slider.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 <!--1m2M Imports-->
 <link rel="import" href="ONEm2M-graph.html">
 
@@ -20,6 +21,9 @@
       .visualizer {        
         background-color: white;
       }
+      paper-button {
+        background-color: aliceblue;
+      }
     </style>
     <paper-slider min="2500" max="7500" value="{{threshold}}"></paper-slider>
     <button on-tap="captureAudio">Get Audio</button>
@@ -29,6 +33,7 @@
         <canvas id="visualizer" class="visualizer"></canvas>
       </div>
       <ONEm2M-graph id="graph1"></ONEm2M-graph>
+      <paper-button on-tap="exportAudioData">Export...</paper-button>
     </section>
     <p id="pulseCounter"></p>    
   </template>
@@ -52,17 +57,20 @@
           type: Object
         }
       },
-
+      
+      //lifecycle callbacks
       attached: function() {
         let graph = this.$.visualizer;
         graph.width = 640;
         graph.height = 100;        
       },
-
+      
+      //_private functions
       _thresholdChanged: function(val) {
         console.log(val); //may need to use this to signal updating of metronome volume
       },
 
+      //public functions
       captureAudio: function() {
         this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();        
         var analyser = this.audioCtx.createAnalyser();
@@ -106,6 +114,7 @@
             {
               console.log(analyser);
               track.stop();
+              sessionStorage.setItem("volumeHistory", volumeHistory);
             }
             analyser.getByteFrequencyData(dataArray);
             volumePeriodLength++;
@@ -179,6 +188,18 @@
         }).catch(function(err) {
           console.log(err);            
         });        
+      },
+      exportAudioData: function() {
+        let element = document.createElement('a');
+        element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(sessionStorage.getItem("volumeHistory")));
+        element.setAttribute("download", "audioHistory.csv");
+
+        element.style.display = "none";
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
       }
     });
   </script>
