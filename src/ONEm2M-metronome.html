@@ -35,7 +35,7 @@
         },
         noteLength: { // length of "beep" (in seconds)
             type: Number,
-            value: 0.5
+            value: 0.05
         },
         noteResolution: {
             type: Number,
@@ -85,10 +85,10 @@
           this.timerWorker.postMessage({"interval": this.lookahead});
       },
 
+      //methods
       nextNote: function() {
           // Advance current note and time by a 16th note...
-          var secondsPerBeat = 60.0 / this.tempo;    // Notice this picks up the CURRENT 
-                                                // tempo value to calculate beat length.
+          var secondsPerBeat = 60.0 / this.tempo;    // Notice this picks up the CURRENT tempo value to calculate beat length.
           this.nextNoteTime += 0.25 * secondsPerBeat;    // Add beat length to last beat time
           this.current16thNote++;    // Advance the beat number, wrap to zero
           if (this.current16thNote == 16) {

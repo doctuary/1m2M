@@ -1,0 +1,26 @@
+<!--Polymer Imports-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+
+<dom-module id="ONEm2M-chord-bank">
+  <template>
+      <iron-selector>
+          <div>A</div>
+          <div>B</div>
+          <div>C</div>
+      </iron-selector> 
+  </template>
+
+  <script>
+    Polymer({
+      is: 'ONEm2M-chord-bank',
+
+      properties: {
+          availableChords: {
+              type: Array,
+              value: ["A","B","C","D","E","F","G","Am","Bm","Cm","Dm","Em","Fm","Gm","A7","B7","C7","D7","E7","Fmaj7","G7"]
+          }
+      }
+    });
+  </script>
+</dom-module>
