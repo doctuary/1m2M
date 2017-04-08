@@ -11,7 +11,7 @@
       section {
         height: 500px;
       }
-      .visualizer-container {
+      /*.visualizer-container {
         margin: 1em;        
         padding: 1em;
         border-radius: 1em;        
@@ -20,7 +20,7 @@
       }
       .visualizer {        
         background-color: white;
-      }
+      }*/
       paper-button {
         background-color: aliceblue;
       }
@@ -29,9 +29,9 @@
     <button on-tap="captureAudio">Get Audio</button>
     </br>
     <section id="visualizations">
-      <div id="visualizerContainer" class="visualizer-container">
+      <!--<div id="visualizerContainer" class="visualizer-container">
         <canvas id="visualizer" class="visualizer"></canvas>
-      </div>
+      </div>-->
       <ONEm2M-graph id="graph1"></ONEm2M-graph>
       <paper-button on-tap="exportAudioData">Export...</paper-button>
     </section>
@@ -60,9 +60,9 @@
       
       //lifecycle callbacks
       attached: function() {
-        let graph = this.$.visualizer;
-        graph.width = 640;
-        graph.height = 100;        
+        // let graph = this.$.visualizer;
+        // graph.width = 640;
+        // graph.height = 100;        
       },
       
       //_private functions
@@ -79,7 +79,7 @@
         analyser.smoothingTimeConstant = 0.85;
 
         //let canvasContainer = this.$.visualizerContainer;
-        var canvas = this.$.visualizer;
+        //var canvas = this.$.visualizer;
         let graph = this.$.graph1;
         var canvasContext = this.$.graph1.context; //canvas.getContext("2d");
         //canvasContext.scale(1,1);
@@ -90,8 +90,8 @@
         var drawVisual;
 
         function visualize(track) {
-          WIDTH = canvas.width;
-          HEIGHT = canvas.height;
+          // WIDTH = canvas.width;
+          // HEIGHT = canvas.height;
 
           analyser.fftSize = 256;
           var bufferLength = analyser.frequencyBinCount;
