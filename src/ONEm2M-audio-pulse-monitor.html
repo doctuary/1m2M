@@ -11,6 +11,13 @@
       section {
         height: 300px;
       }
+      .graph-container {
+            margin: 1em;        
+            padding: 1em;
+            border-radius: 1em;        
+            background-color: lightgray;
+            height: 200px;        
+        }
       paper-button {
         background-color: aliceblue;
       }
@@ -19,7 +26,9 @@
     <button on-tap="captureAudio">Get Audio</button>
     </br>
     <section id="visualizations">
-      <ONEm2M-graph id="graph1"></ONEm2M-graph>
+      <div class="graph-container">
+        <ONEm2M-graph id="graph1"></ONEm2M-graph>
+      </div>
       <paper-button on-tap="exportAudioData">Export...</paper-button>
     </section>
     <p id="pulseCounter"></p>    

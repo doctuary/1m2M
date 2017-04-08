@@ -8,16 +8,9 @@
       <style>
           canvas {
               background-color: white;
-          }
-          .graph-container {
-              margin: 1em;        
-              padding: 1em;
-              border-radius: 1em;        
-              background-color: lightgray;
-              height: 200px;        
-          }
+          }          
       </style>
-      <div class="graph-container">
+      <div>
         <canvas id="graph" width="{{graphWidth}}" height="{{graphHeight}}"></canvas> 
       </div>
   </template>
@@ -103,7 +96,7 @@
           this.centerY = this._computeCenter(this.minY,this.rangeY,this.graphHeight);          
           this.centerX = this._computeCenter(this.minX,this.rangeX,this.graphWidth);          
           this.drawXAxis();
-          this.drawYAxis();      
+          this.drawYAxis();                
       },
 
       //public members
