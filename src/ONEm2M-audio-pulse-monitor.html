@@ -9,7 +9,7 @@
   <template>
     <style>
       section {
-        height: 500px;
+        height: 300px;
       }
       paper-button {
         background-color: aliceblue;
@@ -108,7 +108,6 @@
             }
             //add beat markers for the metronome
             if (x % 10 == 0) {
-              console.log("drawing vertical");
               graph.drawVerticalLine(x);
             }
           };

@@ -12,7 +12,7 @@
           }
       </style>
       <paper-dropdown-menu label="Chord [[index]]">
-          <paper-listbox class="dropdown-content">
+          <paper-listbox id="chordList" class="dropdown-content">
               <template is="dom-repeat" items='[[availableChords]]' as="chord">
                   <paper-item>[[chord]]</paper-item>
               </template>
@@ -34,6 +34,12 @@
               reflectToAttribute: true
           }
 
+      },
+
+      selectChord: function(chordName) {
+          let list = this.$.chordList;
+          let chordIndex = (chordName) ? this.availableChords.indexOf(chordName) : Math.floor(Math.random() * this.availableChords.length);
+          list.select(chordIndex);          
       }
     });
   </script>

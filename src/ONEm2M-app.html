@@ -1,5 +1,6 @@
 <!--Polymer Imports-->
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-collapse/iron-collapse.html">
 <!--1m2M Imports-->
 <link rel="import" href="ONEm2M-metronome.html">
 <link rel="import" href="ONEm2M-audio-pulse-monitor.html">
@@ -13,22 +14,42 @@
         border-radius: 1em;
         padding: 1em;
         margin: 1em;
-      }
+      } 
     </style>
     <section class="chord-combination">
       <p>Select Chord Combination:</p>
-      <ONEm2M-chord-bank index="1"></ONEm2M-chord-bank>
+      <ONEm2M-chord-bank id="chord1" index="1"></ONEm2M-chord-bank>
       <span>to</span>
-      <ONEm2M-chord-bank index="2"></ONEm2M-chord-bank>
+      <ONEm2M-chord-bank id="chord2" index="2"></ONEm2M-chord-bank>
+      <button on-tap="setChords">Set Chords</button>
+      <button on-tap="unhide">Unhide</button>
     </section>
     </br>
-    <ONEm2M-metronome></ONEm2M-metronome>                 
-    <ONEm2M-audio-pulse-monitor></ONEm2M-audio-pulse-monitor>
+    <ONEm2M-metronome></ONEm2M-metronome>    
+    <template is="dom-repeat" items="[0,1,2,3,4]">
+      <iron-collapse id="pm{{item}}">
+        <ONEm2M-audio-pulse-monitor></ONEm2M-audio-pulse-monitor>
+      </iron-collapse>
+    </template>
   </template>
 
   <script>
     Polymer({
-      is: 'ONEm2M-app'      
+      is: 'ONEm2M-app',
+      //lifecycle callbacks
+      attached: function() {
+        this.setChords();
+      },
+      //public members
+      setChords: function() {        
+        this.$.chord1.selectChord();
+        this.$.chord2.selectChord();
+      },
+      unhide: function() {
+        this.$$("#pm1").toggle();
+        let self = this;
+        setTimeout(function() {self.$$("#pm0").toggle();}, 1000);        
+      }
     });
   </script>
 </dom-module>
