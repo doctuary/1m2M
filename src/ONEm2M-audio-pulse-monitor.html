@@ -11,16 +11,6 @@
       section {
         height: 500px;
       }
-      /*.visualizer-container {
-        margin: 1em;        
-        padding: 1em;
-        border-radius: 1em;        
-        background-color: lightgray;
-        height: 20%;        
-      }
-      .visualizer {        
-        background-color: white;
-      }*/
       paper-button {
         background-color: aliceblue;
       }
@@ -29,9 +19,6 @@
     <button on-tap="captureAudio">Get Audio</button>
     </br>
     <section id="visualizations">
-      <!--<div id="visualizerContainer" class="visualizer-container">
-        <canvas id="visualizer" class="visualizer"></canvas>
-      </div>-->
       <ONEm2M-graph id="graph1"></ONEm2M-graph>
       <paper-button on-tap="exportAudioData">Export...</paper-button>
     </section>
@@ -56,14 +43,7 @@
         audioCtx: {
           type: Object
         }
-      },
-      
-      //lifecycle callbacks
-      attached: function() {
-        // let graph = this.$.visualizer;
-        // graph.width = 640;
-        // graph.height = 100;        
-      },
+      },      
       
       //_private functions
       _thresholdChanged: function(val) {
@@ -77,12 +57,9 @@
         analyser.minDecibels = -90;
         analyser.maxDecibels = -10;
         analyser.smoothingTimeConstant = 0.85;
-
-        //let canvasContainer = this.$.visualizerContainer;
-        //var canvas = this.$.visualizer;
+        
         let graph = this.$.graph1;
-        var canvasContext = this.$.graph1.context; //canvas.getContext("2d");
-        //canvasContext.scale(1,1);
+        var canvasContext = this.$.graph1.context;
 
         var pulseCounter = this.$.pulseCounter;
         var pulseCount = 0;
@@ -90,15 +67,10 @@
         var drawVisual;
 
         function visualize(track) {
-          // WIDTH = canvas.width;
-          // HEIGHT = canvas.height;
-
           analyser.fftSize = 256;
           var bufferLength = analyser.frequencyBinCount;
           console.log(bufferLength);
-          var dataArray = new Uint8Array(bufferLength);
-
-          //canvasContext.clearRect(0, 0, WIDTH, HEIGHT);
+          var dataArray = new Uint8Array(bufferLength);          
 
           let x = graph.centerX; //100; // this.$.graph1.centerX;
           let barWidth = 1;
