@@ -193,12 +193,9 @@
         let element = document.createElement('a');
         element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(sessionStorage.getItem("volumeHistory")));
         element.setAttribute("download", "audioHistory.csv");
-
         element.style.display = "none";
         document.body.appendChild(element);
-
         element.click();
-
         document.body.removeChild(element);
       }
     });

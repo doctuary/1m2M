@@ -7,7 +7,21 @@
 
 <dom-module id="ONEm2M-app">
   <template>
-    <ONEm2M-chord-bank></ONEm2M-chord-bank>
+    <style>
+      .chord-combination {
+        background-color: lightgrey;
+        border-radius: 1em;
+        padding: 1em;
+        margin: 1em;
+      }
+    </style>
+    <section class="chord-combination">
+      <p>Select Chord Combination:</p>
+      <ONEm2M-chord-bank index="1"></ONEm2M-chord-bank>
+      <span>to</span>
+      <ONEm2M-chord-bank index="2"></ONEm2M-chord-bank>
+    </section>
+    </br>
     <ONEm2M-metronome></ONEm2M-metronome>                 
     <ONEm2M-audio-pulse-monitor></ONEm2M-audio-pulse-monitor>
   </template>
