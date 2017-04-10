@@ -32,7 +32,7 @@
     </br>
     <section id="visualizations">
       <div class="graph-container">
-        <ONEm2M-chord-combo-badge class="chord-combination" chord1="A" chord2="E"></ONEm2M-chord-combo-badge>
+        <ONEm2M-chord-combo-badge class="chord-combination" chord1="{{chord1}}" chord2="{{chord2}}"></ONEm2M-chord-combo-badge>
         <ONEm2M-graph id="graph1"></ONEm2M-graph>
       </div>
       <paper-button on-tap="exportAudioData">Export...</paper-button>
@@ -45,6 +45,19 @@
       is: 'ONEm2M-audio-pulse-monitor',
 
       properties: {
+        audioCtx: {
+          type: Object
+        },
+        chord1: {
+          type: String,
+          reflectToAttribute: true,
+          notify: true
+        },
+        chord2: {
+          type: String,
+          reflectToAttribute: true,
+          notify: true
+        },
         isRecording: {
           type: Boolean
         },
@@ -54,10 +67,7 @@
           reflectToAttribute: true,
           value: 5000,          
           observer: "_thresholdChanged"
-        },
-        audioCtx: {
-          type: Object
-        }
+        }        
       },      
       
       //_private functions
