@@ -4,26 +4,12 @@
 <!--1m2M Imports-->
 <link rel="import" href="ONEm2M-metronome.html">
 <link rel="import" href="ONEm2M-audio-pulse-monitor.html">
-<link rel="import" href="ONEm2M-chord-bank.html">
+<link rel="import" href="ONEm2M-chord-combo-selector.html">
 
 <dom-module id="ONEm2M-app">
-  <template>
-    <style>
-      .chord-combination {
-        background-color: lightgrey;
-        border-radius: 1em;
-        padding: 1em;
-        margin: 1em;
-      } 
-    </style>
-    <section class="chord-combination">
-      <p>Select Chord Combination:</p>
-      <ONEm2M-chord-bank id="chord1" index="1" selected-chord="{{chord1}}"></ONEm2M-chord-bank>
-      <span>to</span>
-      <ONEm2M-chord-bank id="chord2" index="2" selected-chord="{{chord2}}"></ONEm2M-chord-bank>
-      <button on-tap="setChords">Set Chords</button>
-      <button on-tap="unhide">Unhide</button>
-    </section>
+  <template>    
+    <ONEm2M-chord-combo-selector chord1={{chord1}} chord2={{chord2}}></ONEm2M-chord-combo-selector>    
+    <button on-tap="unhide">Unhide Monitors</button>
     </br>
     <ONEm2M-metronome></ONEm2M-metronome>    
     <template is="dom-repeat" items="[0,1,2,3,4]">
@@ -45,11 +31,7 @@
           type: String,
           observer: "_observeChord2"
         }
-      },
-      //lifecycle callbacks
-      attached: function() {
-        this.setChords();
-      },
+      },      
       //_private members
       _observeChord1: function() {        
         this.$$("#pm0").chord1 = this.chord1;
@@ -57,11 +39,7 @@
       _observeChord2: function() {        
         this.$$("#pm0").chord2 = this.chord2;
       },
-      //public members
-      setChords: function() {        
-        this.$.chord1.selectChord();
-        this.$.chord2.selectChord();
-      },
+      //public members      
       unhide: function() {
         this.$$("#pmContainer1").toggle();
         let self = this;
