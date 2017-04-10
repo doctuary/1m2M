@@ -4,6 +4,7 @@
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <!--1m2M Imports-->
 <link rel="import" href="ONEm2M-graph.html">
+<link rel="import" href="ONEm2M-chord-combo-badge.html">
 
 <dom-module id="ONEm2M-audio-pulse-monitor">
   <template>
@@ -12,12 +13,16 @@
         height: 300px;
       }
       .graph-container {
-            margin: 1em;        
-            padding: 1em;
-            border-radius: 1em;        
-            background-color: lightgray;
-            height: 200px;        
-        }
+          margin: 1em;        
+          padding: 1em;
+          border-radius: 1em;        
+          background-color: lightgray;
+          height: 200px;        
+      }
+      .chord-combination {
+        position: absolute;
+        margin: 0px 10px;                
+      }
       paper-button {
         background-color: aliceblue;
       }
@@ -27,6 +32,7 @@
     </br>
     <section id="visualizations">
       <div class="graph-container">
+        <ONEm2M-chord-combo-badge class="chord-combination" chord1="A" chord2="E"></ONEm2M-chord-combo-badge>
         <ONEm2M-graph id="graph1"></ONEm2M-graph>
       </div>
       <paper-button on-tap="exportAudioData">Export...</paper-button>

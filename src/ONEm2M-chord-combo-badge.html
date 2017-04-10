@@ -1,0 +1,52 @@
+<!--Polymer Imports-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="ONEm2M-chord-combo-badge">
+  <template>
+      <style>
+          .combo-container {
+              border-radius: 0.5em;
+              background-color: palevioletred;              
+          }
+          p {
+              font-size: 8pt;
+              font-style: italic;
+              background-color: firebrick;
+              color: white;
+              border-top-left-radius: 0.5em;
+              border-top-right-radius: 0.5em;
+              text-align: center;
+              padding: 0px 15px;
+          }
+          .combo {
+              font-size: 24pt;
+              text-align: center;
+          }
+      </style>
+      <div class="combo-container">
+        <p>chords</p>
+        <div class="combo">
+            <sup>{{chord1}}</sup>&frasl;<sub>{{chord2}}</sub>
+        </div>
+      <div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'ONEm2M-chord-combo-badge',
+
+      properties: {
+          chord1: {
+              type: String,
+              reflectToAttribute: true,
+              notify: true
+          },
+          chord2: {
+              type: String,
+              reflectToAttribute: true,
+              notify: true
+          }
+      },
+    });
+  </script>
+</dom-module>

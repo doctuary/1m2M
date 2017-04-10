@@ -11,7 +11,7 @@
               margin: 0em 1em;
           }
       </style>
-      <paper-dropdown-menu label="Chord [[index]]">
+      <paper-dropdown-menu id="chordMenu" label="Chord [[index]]" on-iron-select="_chordSelected">
           <paper-listbox id="chordList" class="dropdown-content">
               <template is="dom-repeat" items='[[availableChords]]' as="chord">
                   <paper-item>[[chord]]</paper-item>
@@ -32,10 +32,20 @@
           index: {
               type: Number,
               reflectToAttribute: true
-          }
-
+          },
+          selectedChord: {
+              type: String,              
+              reflectToAttribute: true,
+              notify: true
+          }          
       },
 
+      //_private members
+      _chordSelected: function(e) {          
+          this.selectedChord = this.$.chordMenu.value;          
+      },
+
+      //public members
       selectChord: function(chordName) {
           let list = this.$.chordList;
           let chordIndex = (chordName) ? this.availableChords.indexOf(chordName) : Math.floor(Math.random() * this.availableChords.length);
