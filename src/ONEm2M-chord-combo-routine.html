@@ -12,13 +12,21 @@
         width: 120px;
         text-align: center;
       }
+      div div:nth-child(odd) {
+        background-color: aliceblue;
+      }
+      .active-combo {
+        border-color: black;
+        border-style: solid;
+      }
     </style>
     <div>
       <paper-input type="number" label="Combination Count" value="{{comboCount}}"></paper-input>
-      <button on-click="_changeCombos">New Routine</button>      
+      <button on-click="_changeCombos">New Routine</button>
+      <button on-click="nextCombo">Next Combo</button>
       </br>
-      <template is="dom-repeat" items="{{combos}}" as="combo">
-        <div>
+      <template id="combos" is="dom-repeat" items="{{combos}}" as="combo">
+        <div id="combo{{combo}}">
           <ONEm2M-chord-bank id="combo{{combo}}Chord1" class="chord-column" index="1"></ONEm2M-chord-bank>
           <ONEm2M-chord-bank id="combo{{combo}}Chord2" class="chord-column" index="2"></ONEm2M-chord-bank>          
         </div>
@@ -31,6 +39,10 @@
       is: 'ONEm2M-chord-combo-routine',
 
       properties: {
+          activeComboIndex: {
+            type: Number,
+            notify: true
+          },
           comboCount: {
               type: Number,              
               notify: true,
@@ -73,8 +85,20 @@
         for (let i=0; i < this.comboCount; i++) {
           combos.push(i);
         }
-        this.combos = combos;        
-      }    
+        this.combos = combos;
+        this.activeComboIndex = -1;
+      },
+      nextCombo: function() {        
+        if (this.activeComboIndex >= 0) {
+          this.$$("#combo" + this.activeComboIndex).classList.remove("active-combo");
+        }
+        this.activeComboIndex++;
+        if (this.activeComboIndex < this.comboCount) {
+          this.$$("#combo" + this.activeComboIndex).classList.add("active-combo");
+        } else {
+          this.activeComboIndex = -1;
+        }
+      }
     });
   </script>
 </dom-module>
