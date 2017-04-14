@@ -39,6 +39,10 @@
               notify: true
           }          
       },
+      //lifecycle callbacks
+      attached: function() {
+          this.selectChord();
+      },
 
       //_private members
       _chordSelected: function(e) {          

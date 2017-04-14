@@ -1,14 +1,26 @@
 <!--Polymer Imports-->
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<!--1m2M Imports-->
+<link rel="import" href="ONEm2M-chord-bank.html">
 
 <dom-module id="ONEm2M-chord-combo-routine">
-  <template>      
-    <div class="practice-schedule">
+  <template>
+    <style>      
+      .chord-column {
+        display: inline-block;
+        width: 120px;
+        text-align: center;
+      }
+    </style>
+    <div>
+      <paper-input type="number" label="Combination Count" value="{{comboCount}}"></paper-input>
+      <button on-click="_changeCombos">New Routine</button>      
+      </br>
       <template is="dom-repeat" items="{{combos}}" as="combo">
         <div>
-          <span>{{combo.chord1}}</span>
-          <span>to</span>
-          <span>{{combo.chord2}}</span>
+          <ONEm2M-chord-bank id="combo{{combo}}Chord1" class="chord-column" index="1"></ONEm2M-chord-bank>
+          <ONEm2M-chord-bank id="combo{{combo}}Chord2" class="chord-column" index="2"></ONEm2M-chord-bank>          
         </div>
       </template>
     </div>      
@@ -20,14 +32,49 @@
 
       properties: {
           comboCount: {
-              type: Number,
-              value: 5
+              type: Number,              
+              notify: true,
+              observer: "_comboCountChanged"
           },
           combos: {
               type: Array,
-              value: [{chord1:"A", chord2:"E"},{chord1:"C",chord2:"D"}]
+              value: []
           }
-      }      
+      },
+      //lifecycle callbacks
+      attached: function() {
+        this.comboCount = 5;
+      },
+
+      //_private members
+      _changeCombos: function() {
+        for (let i=0; i < this.comboCount; i++) {
+          try {
+            this.$$("#combo" + i + "Chord1").selectChord();
+          }
+          catch (err) {
+            console.log(i + "Chord1");
+          }
+          try {
+            this.$$("#combo" + i + "Chord2").selectChord();
+          }
+          catch (err) {            
+            console.log(i + "Chord2");
+          }
+        }
+      },
+      _comboCountChanged: function() {
+        this.newRoutine();
+      },
+      
+      //public members
+      newRoutine: function() {        
+        let combos = [];
+        for (let i=0; i < this.comboCount; i++) {
+          combos.push(i);
+        }
+        this.combos = combos;        
+      }    
     });
   </script>
 </dom-module>
