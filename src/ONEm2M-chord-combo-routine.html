@@ -1,0 +1,33 @@
+<!--Polymer Imports-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="ONEm2M-chord-combo-routine">
+  <template>      
+    <div class="practice-schedule">
+      <template is="dom-repeat" items="{{combos}}" as="combo">
+        <div>
+          <span>{{combo.chord1}}</span>
+          <span>to</span>
+          <span>{{combo.chord2}}</span>
+        </div>
+      </template>
+    </div>      
+  </template>
+
+  <script>
+    Polymer({
+      is: 'ONEm2M-chord-combo-routine',
+
+      properties: {
+          comboCount: {
+              type: Number,
+              value: 5
+          },
+          combos: {
+              type: Array,
+              value: [{chord1:"A", chord2:"E"},{chord1:"C",chord2:"D"}]
+          }
+      }      
+    });
+  </script>
+</dom-module>

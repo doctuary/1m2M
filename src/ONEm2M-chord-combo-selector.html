@@ -2,6 +2,7 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <!--1m2M Imports-->
 <link rel="import" href="ONEm2M-chord-bank.html">
+<link rel="import" href="ONEm2M-chord-combo-routine.html">
 
 <dom-module id="ONEm2M-chord-combo-selector">
   <template>
@@ -11,14 +12,18 @@
             border-radius: 1em;
             padding: 1em;
             margin: 1em;
-        } 
+        }
+        .practice-schedule {
+          display: inline-block;
+        }
       </style>
       <section class="chord-combination">
         <p>Select Chord Combination:</p>
         <ONEm2M-chord-bank id="chord1" index="1" selected-chord="{{chord1}}"></ONEm2M-chord-bank>
         <span>to</span>
         <ONEm2M-chord-bank id="chord2" index="2" selected-chord="{{chord2}}"></ONEm2M-chord-bank>
-        <button on-tap="setChords">Set Chords</button>      
+        <button on-tap="setChords">Set Chords</button>
+        <ONEm2M-chord-combo-routine class="practice-schedule"></ONEm2M-chord-combo-routine>
       </section>
   </template>
 
@@ -36,14 +41,6 @@
               type: String,
               reflectToAttribute: true,
               notify: true
-          },
-          comboCount: {
-              type: Number,
-              value: 5
-          },
-          combos: {
-              type: Array,
-              value: []
           }
       },
       //lifecycle callbacks
