@@ -24,11 +24,13 @@
       <paper-input type="number" label="Combination Count" value="{{comboCount}}"></paper-input>
       <button on-click="_changeCombos">New Routine</button>
       <button on-click="nextCombo">Next Combo</button>
+      <button on-click="startRoutine">Start Practicing</button>
       </br>
       <template id="combos" is="dom-repeat" items="{{combos}}" as="combo">
         <div id="combo{{combo}}">
           <ONEm2M-chord-bank id="combo{{combo}}Chord1" class="chord-column" index="1"></ONEm2M-chord-bank>
-          <ONEm2M-chord-bank id="combo{{combo}}Chord2" class="chord-column" index="2"></ONEm2M-chord-bank>          
+          <ONEm2M-chord-bank id="combo{{combo}}Chord2" class="chord-column" index="2"></ONEm2M-chord-bank>
+          <!--TAG: consider adding the pulse monitor here-->
         </div>
       </template>
     </div>      
@@ -98,6 +100,11 @@
         } else {
           this.activeComboIndex = -1;
         }
+      },
+      startRoutine: function() {
+        setInterval(function() {console.log("move");},1000);
+        let self = this;
+        setInterval(function() { self.nextCombo(); },1000);
       }
     });
   </script>
