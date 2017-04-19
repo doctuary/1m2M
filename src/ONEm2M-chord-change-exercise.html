@@ -6,13 +6,40 @@
 
 <dom-module id="ONEm2M-chord-change-exercise">
   <template>
-    
-     
+      <style>
+        .exercise-container {
+            position: relative;            
+        }
+        .chord-combination {            
+            position: absolute;   
+            top: 4em;
+            left: 2.4em;           
+        }
+        .pulse-monitor {
+            display: inline-block;            
+        }
+      </style>
+      <div class="exercise-container">
+        <ONEm2M-chord-combo-badge class="chord-combination" chord1="{{chord1}}" chord2="{{chord2}}"></ONEm2M-chord-combo-badge>
+        <ONEm2M-audio-pulse-monitor class="pulse-monitor"></ONEm2M-audio-pulse-monitor>    
+      <div>
   </template>
 
   <script>
     Polymer({
-      is: 'ONEm2M-chord-change-exercise'
+      is: 'ONEm2M-chord-change-exercise',
+      properties: {
+        chord1: {
+          type: String,
+          reflectToAttribute: true,
+          notify: true
+        },
+        chord2: {
+          type: String,
+          reflectToAttribute: true,
+          notify: true
+        }
+      }
     });
   </script>
 </dom-module>

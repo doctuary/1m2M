@@ -3,7 +3,7 @@
 <link rel="import" href="../bower_components/iron-collapse/iron-collapse.html">
 <!--1m2M Imports-->
 <link rel="import" href="ONEm2M-metronome.html">
-<link rel="import" href="ONEm2M-audio-pulse-monitor.html">
+<link rel="import" href="ONEm2M-chord-change-exercise.html">
 <link rel="import" href="ONEm2M-chord-combo-selector.html">
 
 <dom-module id="ONEm2M-app">
@@ -13,8 +13,8 @@
     </br>
     <ONEm2M-metronome></ONEm2M-metronome>    
     <template is="dom-repeat" items="[0,1,2,3,4]">
-      <iron-collapse id="pmContainer{{item}}">
-        <ONEm2M-audio-pulse-monitor id="pm{{item}}"></ONEm2M-audio-pulse-monitor>
+      <iron-collapse id="exerciseContainer{{item}}">        
+        <ONEm2M-chord-change-exercise id="exercise{{item}}"></ONEm2M-chord-change-exercise>
       </iron-collapse>
     </template>
   </template>
@@ -34,16 +34,16 @@
       },      
       //_private members
       _observeChord1: function() {        
-        this.$$("#pm0").chord1 = this.chord1;
+        this.$$("#exercise0").chord1 = this.chord1;
       },
       _observeChord2: function() {        
-        this.$$("#pm0").chord2 = this.chord2;
+        this.$$("#exercise0").chord2 = this.chord2;
       },
       //public members      
       unhide: function() {
-        this.$$("#pmContainer1").toggle();
+        this.$$("#exerciseContainer1").toggle();
         let self = this;
-        setTimeout(function() {self.$$("#pmContainer0").toggle();}, 1000);        
+        setTimeout(function() {self.$$("#exerciseContainer0").toggle();}, 1000);        
       }
     });
   </script>

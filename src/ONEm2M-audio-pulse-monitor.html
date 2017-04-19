@@ -4,7 +4,6 @@
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <!--1m2M Imports-->
 <link rel="import" href="ONEm2M-graph.html">
-<link rel="import" href="ONEm2M-chord-combo-badge.html">
 
 <dom-module id="ONEm2M-audio-pulse-monitor">
   <template>
@@ -13,31 +12,46 @@
         height: 300px;
       }
       .graph-container {
+          display: inline-block;
           margin: 1em;        
           padding: 1em;
           border-radius: 1em;        
           background-color: lightgray;
-          height: 200px;        
+          height: 240px;        
       }
-      .chord-combination {
-        position: absolute;
-        margin: 0px 10px;                
+      .controls {
+        margin-bottom: 4px;
       }
+      label {
+        display: inline-block;        
+        padding-bottom: 4px;
+      }
+      paper-slider {
+        vertical-align: bottom;
+        display: inline-block;
+        margin-right: 1.5em;     
+      }     
       paper-button {
-        background-color: aliceblue;
-      }
-    </style>
-    <paper-slider id="thresholdSlider" min="2500" max="7500" value="{{threshold}}"></paper-slider>
-    <button on-tap="captureAudio">Get Audio</button>
-    </br>
-    <section id="visualizations">
-      <div class="graph-container">
-        <ONEm2M-chord-combo-badge class="chord-combination" chord1="{{chord1}}" chord2="{{chord2}}"></ONEm2M-chord-combo-badge>
+        background-color: aliceblue;        
+        float: right;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        margin-right: 0px;
+      }      
+    </style>    
+    <section id="visualizations">      
+      <div class="graph-container">        
+        <div class="controls">
+          <label>Pulse Threshold:</label>
+          <paper-slider id="thresholdSlider" min="2500" max="7500" value="{{threshold}}"></paper-slider>
+          <label>Pulse Count:</label>
+          <span id="pulseCounter"></span>          
+          <paper-button on-tap="exportAudioData">Export...</paper-button>
+          <paper-button on-tap="captureAudio">Get Audio</paper-button>
+        </div>
         <ONEm2M-graph id="graph1"></ONEm2M-graph>
-      </div>
-      <paper-button on-tap="exportAudioData">Export...</paper-button>
-    </section>
-    <p id="pulseCounter"></p>    
+      </div>      
+    </section>    
   </template>
 
   <script>
@@ -47,17 +61,7 @@
       properties: {
         audioCtx: {
           type: Object
-        },
-        chord1: {
-          type: String,
-          reflectToAttribute: true,
-          notify: true
-        },
-        chord2: {
-          type: String,
-          reflectToAttribute: true,
-          notify: true
-        },
+        },        
         isRecording: {
           type: Boolean
         },
