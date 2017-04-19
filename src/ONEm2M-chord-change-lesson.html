@@ -16,7 +16,7 @@
             display: inline-block;
         }
     </style>          
-    <ONEm2M-chord-combo-routine class="practice-schedule" combo-count="{{exerciseCount}}" active-combo-index="{{activeExerciseIndex}}"></ONEm2M-chord-combo-routine>
+    <ONEm2M-chord-combo-routine id="routine" class="practice-schedule" combo-count="{{exerciseCount}}" active-combo-index="{{activeExerciseIndex}}"></ONEm2M-chord-combo-routine>
     <div class="exercises">
         <template is="dom-repeat" items="{{exercises}}">            
             <iron-collapse id="exerciseContainer{{item}}">        
@@ -67,7 +67,18 @@
         for (let i=0; i < this.exerciseCount; i++) {
           exercises.push(i);
         }
-        this.exercises = exercises;        
+        this.exercises = exercises;
+        let routine = this.$.routine;
+        let self = this;
+        setTimeout(function() {
+            for (let i=0; i< self.exerciseCount; i++) {
+                let exercise = self.$$("#exercise" + i);                
+                if (exercise) {
+                    exercise.chord1 = "A"; // routine.combos[i].chord1;
+                    exercise.chord2 = "E"; // routine.combos[i].chord2;
+                }
+            }
+        }, 1000); 
       }
     });
   </script>
