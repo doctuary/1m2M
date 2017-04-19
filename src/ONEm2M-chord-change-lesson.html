@@ -1,21 +1,73 @@
 <!--Polymer Imports-->
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-collapse/iron-collapse.html">
 <!--1m2M Imports-->
+<link rel="import" href="ONEm2M-chord-combo-routine.html">
 <link rel="import" href="ONEm2M-chord-change-exercise.html">
 
 <dom-module id="ONEm2M-chord-change-lesson">
   <template>
-      
+    <style>
+        .practice-schedule {
+          display: inline-block;
+          vertical-align: top;
+        }
+        .exercises {
+            display: inline-block;
+        }
+    </style>          
+    <ONEm2M-chord-combo-routine class="practice-schedule" combo-count="{{exerciseCount}}" active-combo-index="{{activeExerciseIndex}}"></ONEm2M-chord-combo-routine>
+    <div class="exercises">
+        <template is="dom-repeat" items="{{exercises}}">            
+            <iron-collapse id="exerciseContainer{{item}}">        
+                <ONEm2M-chord-change-exercise id="exercise{{item}}"></ONEm2M-chord-change-exercise>
+            </iron-collapse>
+        </template>
+    </div>
   </template>
 
   <script>
     Polymer({
       is: 'ONEm2M-chord-change-lesson',
       properties: {
+        activeExerciseIndex: {
+            type: Number,
+            notify: true,
+            observer: "_activeExerciseChanged"
+        },
+        exerciseCount: {
+            type: Number,
+            notify: true,
+            observer: "_exerciseCountChanged"
+        },
         exercises: {
             type: Array,
-            value: []
+            value: [],
+            notify: true
         }
+      },
+      //lifecycle callbacks
+      attached: function() {
+        this.exerciseCount = 5;
+      },
+      //_private members
+      _activeExerciseChanged: function() {          
+          let exercise = this.$$("#exerciseContainer" + this.activeExerciseIndex);
+          if (exercise) {
+              exercise.toggle();
+          }        
+      },
+      _exerciseCountChanged: function() {        
+        this.newLesson();        
+      },
+      
+      //public members
+      newLesson: function() {        
+        let exercises = [];
+        for (let i=0; i < this.exerciseCount; i++) {
+          exercises.push(i);
+        }
+        this.exercises = exercises;        
       }
     });
   </script>

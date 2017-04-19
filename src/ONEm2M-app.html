@@ -1,22 +1,17 @@
 <!--Polymer Imports-->
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/iron-collapse/iron-collapse.html">
 <!--1m2M Imports-->
 <link rel="import" href="ONEm2M-metronome.html">
-<link rel="import" href="ONEm2M-chord-change-exercise.html">
+<link rel="import" href="ONEm2M-chord-change-lesson.html">
 <link rel="import" href="ONEm2M-chord-combo-selector.html">
 
 <dom-module id="ONEm2M-app">
   <template>    
     <ONEm2M-chord-combo-selector chord1={{chord1}} chord2={{chord2}}></ONEm2M-chord-combo-selector>    
-    <button on-tap="unhide">Unhide Monitors</button>
-    </br>
+    <button on-tap="unhide">Unhide Monitors</button>    
     <ONEm2M-metronome></ONEm2M-metronome>    
-    <template is="dom-repeat" items="[0,1,2,3,4]">
-      <iron-collapse id="exerciseContainer{{item}}">        
-        <ONEm2M-chord-change-exercise id="exercise{{item}}"></ONEm2M-chord-change-exercise>
-      </iron-collapse>
-    </template>
+    </br>
+    <ONEm2M-chord-change-lesson></ONEm2M-chord-change-lesson>        
   </template>
 
   <script>
@@ -34,10 +29,10 @@
       },      
       //_private members
       _observeChord1: function() {        
-        this.$$("#exercise0").chord1 = this.chord1;
+        //this.$$("#exercise0").chord1 = this.chord1;
       },
       _observeChord2: function() {        
-        this.$$("#exercise0").chord2 = this.chord2;
+        //this.$$("#exercise0").chord2 = this.chord2;
       },
       //public members      
       unhide: function() {

@@ -43,22 +43,20 @@
       properties: {
           activeComboIndex: {
             type: Number,
-            notify: true
+            notify: true,
+            reflectToAttribute: true
           },
           comboCount: {
               type: Number,              
               notify: true,
-              observer: "_comboCountChanged"
+              observer: "_comboCountChanged",
+              reflectToAttribute: true
           },
           combos: {
               type: Array,
               value: []
           }
-      },
-      //lifecycle callbacks
-      attached: function() {
-        this.comboCount = 5;
-      },
+      },      
 
       //_private members
       _changeCombos: function() {
