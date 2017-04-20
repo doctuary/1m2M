@@ -16,7 +16,7 @@
             display: inline-block;
         }
     </style>          
-    <ONEm2M-chord-combo-routine id="routine" class="practice-schedule" combo-count="{{exerciseCount}}" active-combo-index="{{activeExerciseIndex}}"></ONEm2M-chord-combo-routine>
+    <ONEm2M-chord-combo-routine id="routine" class="practice-schedule" combos="{{_combos}}" combo-count="{{exerciseCount}}" active-combo-index="{{activeExerciseIndex}}"  on-iron-select="_combosChanged"></ONEm2M-chord-combo-routine>
     <div class="exercises">
         <template is="dom-repeat" items="{{exercises}}">            
             <iron-collapse id="exerciseContainer{{item}}">        
@@ -30,6 +30,11 @@
     Polymer({
       is: 'ONEm2M-chord-change-lesson',
       properties: {
+        _combos: {
+            type: Array,
+            notify: true,
+            observer: "_combosChanged"
+        },
         activeExerciseIndex: {
             type: Number,
             notify: true,
@@ -56,6 +61,13 @@
           if (exercise) {
               exercise.toggle();
           }        
+      },
+      _combosChanged: function(e) {
+          if (e.path) {
+            for (let i = 0; i < e.path.length; i++) {                
+                console.log(e.path[i].id);
+            }
+          }
       },
       _exerciseCountChanged: function() {        
         this.newLesson();        

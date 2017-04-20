@@ -28,8 +28,8 @@
       </br>
       <template id="combos" is="dom-repeat" items="{{combos}}" as="combo">
         <div id="combo{{combo.id}}">
-          <ONEm2M-chord-bank id="combo{{combo.id}}Chord1" class="chord-column" index="1"></ONEm2M-chord-bank>
-          <ONEm2M-chord-bank id="combo{{combo.id}}Chord2" class="chord-column" index="2"></ONEm2M-chord-bank>
+          <ONEm2M-chord-bank id="combo{{combo.id}}Chord1" class="chord-column" index="1" selected-chord="{{combo.chord1}}"></ONEm2M-chord-bank>
+          <ONEm2M-chord-bank id="combo{{combo.id}}Chord2" class="chord-column" index="2" selected-chord="{{combo.chord2}}"></ONEm2M-chord-bank>
         </div>
       </template>
     </div>      
@@ -54,10 +54,10 @@
           combos: {
               type: Array,
               value: [],
-              notify: true,
-              observer: "_combosChanged"
+              notify: true,              
+              reflectToAttribute: true
           }
-      },      
+      },
 
       //_private members
       _changeCombos: function() {
@@ -79,18 +79,6 @@
       _comboCountChanged: function() {
         this.newRoutine();
       },
-      _combosChanged: function() {        
-        let self = this;
-        for (let i=0; i < this.comboCount; i++) {                    
-          let getComboChords = setInterval(function() {
-            let combo = self.$$("#combo" + i + "Chord1");
-            if (combo) {
-              self.combos[i].chord1 = self.$$("#combo" + i + "Chord1").selectedChord;
-              self.combos[i].chord2 = self.$$("#combo" + i + "Chord2").selectedChord;
-              clearInterval(getComboChords);
-            }}, 100);
-        }
-      },
       
       //public members
       newRoutine: function() {        
@@ -99,8 +87,7 @@
           combos.push({id: i, chord1: "", chord2: ""});
         }
         this.combos = combos;
-        this.activeComboIndex = -1;
-        this._combosChanged();        
+        this.activeComboIndex = -1;       
       },
       nextCombo: function() {        
         if (this.activeComboIndex >= 0) {

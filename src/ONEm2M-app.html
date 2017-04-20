@@ -7,8 +7,6 @@
 
 <dom-module id="ONEm2M-app">
   <template>    
-    <ONEm2M-chord-combo-selector chord1={{chord1}} chord2={{chord2}}></ONEm2M-chord-combo-selector>    
-    <button on-tap="unhide">Unhide Monitors</button>    
     <ONEm2M-metronome></ONEm2M-metronome>    
     </br>
     <ONEm2M-chord-change-lesson></ONEm2M-chord-change-lesson>        
@@ -16,30 +14,7 @@
 
   <script>
     Polymer({
-      is: 'ONEm2M-app',
-      properties: {
-        chord1: {
-          type: String,
-          observer: "_observeChord1"
-        },
-        chord2: {
-          type: String,
-          observer: "_observeChord2"
-        }
-      },      
-      //_private members
-      _observeChord1: function() {        
-        //this.$$("#exercise0").chord1 = this.chord1;
-      },
-      _observeChord2: function() {        
-        //this.$$("#exercise0").chord2 = this.chord2;
-      },
-      //public members      
-      unhide: function() {
-        this.$$("#exerciseContainer1").toggle();
-        let self = this;
-        setTimeout(function() {self.$$("#exerciseContainer0").toggle();}, 1000);        
-      }
+      is: 'ONEm2M-app'            
     });
   </script>
 </dom-module>
