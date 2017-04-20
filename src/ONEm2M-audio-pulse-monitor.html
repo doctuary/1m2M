@@ -1,7 +1,9 @@
 <!--Polymer Imports-->
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-slider/paper-slider.html">
-<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/av-icons.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/iron-collapse/iron-collapse.html">
 <!--1m2M Imports-->
 <link rel="import" href="ONEm2M-graph.html">
@@ -31,13 +33,9 @@
         vertical-align: bottom;
         display: inline-block;
         margin-right: 1.5em;     
-      }     
-      paper-button {
-        background-color: aliceblue;        
+      }
+      paper-icon-button {
         float: right;
-        padding-top: 4px;
-        padding-bottom: 4px;
-        margin-right: 0px;
       }      
     </style>    
     <section id="visualizations">      
@@ -47,8 +45,8 @@
           <paper-slider id="thresholdSlider" min="2500" max="7500" value="{{threshold}}"></paper-slider>
           <label>Pulse Count:</label>
           <span id="pulseCounter"></span>          
-          <paper-button on-tap="exportAudioData">Export...</paper-button>
-          <paper-button on-tap="captureAudio">Get Audio</paper-button>
+          <paper-icon-button on-tap="exportAudioData" icon="file-download"></paper-icon-button>
+          <paper-icon-button on-tap="captureAudio" icon="av:fiber-manual-record"></paper-icon-button>
         </div>
         <iron-collapse id="graphDrawer">
           <ONEm2M-graph id="graph1"></ONEm2M-graph>
