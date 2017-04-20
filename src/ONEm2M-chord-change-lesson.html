@@ -65,7 +65,17 @@
       _combosChanged: function(e) {
           if (e.path) {
             for (let i = 0; i < e.path.length; i++) {                
-                console.log(e.path[i].id);
+                let id = e.path[i].id;
+                if (id) {
+                    if (id.includes("combo") && id.includes("Chord")) {
+                        let comboIndex = Number(id.substring(5,6));
+                        let chordIndex = Number(id.substring(id.length - 1, id.length));
+                        let exercise = this.$$("#exercise" + comboIndex);
+                        if (exercise) {                            
+                            exercise["chord" + chordIndex] = e.detail.item.innerText;
+                        }
+                    }
+                }
             }
           }
       },
