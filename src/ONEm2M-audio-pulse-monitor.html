@@ -17,7 +17,7 @@
       .graph-container {
           display: inline-block;
           margin: 0.1em;        
-          padding: 0.75em;
+          padding: 0.5em;
           border-radius: 1em;        
           background-color: lightgray;
           max-height: 240px;        
@@ -27,7 +27,11 @@
       }
       label {
         display: inline-block;        
-        padding-bottom: 4px;
+        padding-bottom: 4px;        
+      }
+      .counter {
+        display: inline-block;
+        min-width: 2em;
       }
       paper-slider {
         vertical-align: bottom;
@@ -44,7 +48,7 @@
           <label>Pulse Threshold:</label>
           <paper-slider id="thresholdSlider" min="2500" max="7500" value="{{threshold}}"></paper-slider>
           <label>Pulse Count:</label>
-          <span id="pulseCounter"></span>          
+          <p id="pulseCounter" class="counter"></p>          
           <paper-icon-button on-tap="exportAudioData" icon="file-download"></paper-icon-button>
           <paper-icon-button on-tap="captureAudio" icon="av:fiber-manual-record"></paper-icon-button>
         </div>
