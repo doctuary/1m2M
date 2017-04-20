@@ -15,13 +15,16 @@
             top: 4em;
             left: 2.4em;           
         }
+        .hidden-badge {
+          display: none;
+        }
         .pulse-monitor {
             display: inline-block;            
         }
-      </style>
+      </style>      
       <div class="exercise-container">
-        <ONEm2M-chord-combo-badge class="chord-combination" chord1="{{chord1}}" chord2="{{chord2}}"></ONEm2M-chord-combo-badge>
-        <ONEm2M-audio-pulse-monitor class="pulse-monitor"></ONEm2M-audio-pulse-monitor>    
+        <ONEm2M-chord-combo-badge id="badge" class="chord-combination hidden-badge" chord1="{{chord1}}" chord2="{{chord2}}"></ONEm2M-chord-combo-badge>
+        <ONEm2M-audio-pulse-monitor class="pulse-monitor" is-recording="{{isActive}}"></ONEm2M-audio-pulse-monitor>    
       <div>
   </template>
 
@@ -38,6 +41,19 @@
           type: String,
           reflectToAttribute: true,
           notify: true
+        },
+        isActive: {
+          type: Boolean,
+          notify: true,
+          observer: "_activationChanged"
+        }
+      },
+      // _private members
+      _activationChanged: function() {
+        if (this.isActive) {
+          this.$.badge.classList.remove("hidden-badge");
+        } else {
+          this.$.badge.classList.add("hidden-badge");
         }
       }
     });

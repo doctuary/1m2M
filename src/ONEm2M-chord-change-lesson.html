@@ -1,6 +1,5 @@
 <!--Polymer Imports-->
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/iron-collapse/iron-collapse.html">
 <!--1m2M Imports-->
 <link rel="import" href="ONEm2M-chord-combo-routine.html">
 <link rel="import" href="ONEm2M-chord-change-exercise.html">
@@ -19,9 +18,7 @@
     <ONEm2M-chord-combo-routine id="routine" class="practice-schedule" combos="{{_combos}}" combo-count="{{exerciseCount}}" active-combo-index="{{activeExerciseIndex}}"  on-iron-select="_combosChanged"></ONEm2M-chord-combo-routine>
     <div class="exercises">
         <template is="dom-repeat" items="{{exercises}}">            
-            <iron-collapse id="exerciseContainer{{item}}">        
-                <ONEm2M-chord-change-exercise id="exercise{{item}}"></ONEm2M-chord-change-exercise>
-            </iron-collapse>
+            <ONEm2M-chord-change-exercise id="exercise{{item}}"></ONEm2M-chord-change-exercise>
         </template>
     </div>
   </template>
@@ -57,10 +54,7 @@
       },
       //_private members
       _activeExerciseChanged: function() {          
-          let exercise = this.$$("#exerciseContainer" + this.activeExerciseIndex);
-          if (exercise) {
-              exercise.toggle();
-          }        
+          
       },
       _combosChanged: function(e) {
           if (e.path) {
