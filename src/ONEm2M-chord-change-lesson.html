@@ -72,10 +72,10 @@
         let self = this;
         setTimeout(function() {
             for (let i=0; i< self.exerciseCount; i++) {
-                let exercise = self.$$("#exercise" + i);                
-                if (exercise) {
-                    exercise.chord1 = "A"; // routine.combos[i].chord1;
-                    exercise.chord2 = "E"; // routine.combos[i].chord2;
+                let exercise = self.$$("#exercise" + i);
+                if (exercise) {                    
+                    exercise.chord1 = routine.combos[i].chord1;
+                    exercise.chord2 = routine.combos[i].chord2;
                 }
             }
         }, 1000); 

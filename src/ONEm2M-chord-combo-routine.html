@@ -27,9 +27,9 @@
       <button on-click="startRoutine">Start Practicing</button>
       </br>
       <template id="combos" is="dom-repeat" items="{{combos}}" as="combo">
-        <div id="combo{{combo}}">
-          <ONEm2M-chord-bank id="combo{{combo}}Chord1" class="chord-column" index="1"></ONEm2M-chord-bank>
-          <ONEm2M-chord-bank id="combo{{combo}}Chord2" class="chord-column" index="2"></ONEm2M-chord-bank>
+        <div id="combo{{combo.id}}">
+          <ONEm2M-chord-bank id="combo{{combo.id}}Chord1" class="chord-column" index="1"></ONEm2M-chord-bank>
+          <ONEm2M-chord-bank id="combo{{combo.id}}Chord2" class="chord-column" index="2"></ONEm2M-chord-bank>
         </div>
       </template>
     </div>      
@@ -53,21 +53,23 @@
           },
           combos: {
               type: Array,
-              value: []
+              value: [],
+              notify: true,
+              observer: "_combosChanged"
           }
       },      
 
       //_private members
       _changeCombos: function() {
         for (let i=0; i < this.comboCount; i++) {
-          try {
-            this.$$("#combo" + i + "Chord1").selectChord();
+          try {            
+            this.$$("#combo" + i + "Chord1").selectChord();                        
           }
           catch (err) {
             console.log(i + "Chord1");
           }
           try {
-            this.$$("#combo" + i + "Chord2").selectChord();
+            this.$$("#combo" + i + "Chord2").selectChord();            
           }
           catch (err) {            
             console.log(i + "Chord2");
@@ -77,15 +79,28 @@
       _comboCountChanged: function() {
         this.newRoutine();
       },
+      _combosChanged: function() {        
+        let self = this;
+        for (let i=0; i < this.comboCount; i++) {                    
+          let getComboChords = setInterval(function() {
+            let combo = self.$$("#combo" + i + "Chord1");
+            if (combo) {
+              self.combos[i].chord1 = self.$$("#combo" + i + "Chord1").selectedChord;
+              self.combos[i].chord2 = self.$$("#combo" + i + "Chord2").selectedChord;
+              clearInterval(getComboChords);
+            }}, 100);
+        }
+      },
       
       //public members
       newRoutine: function() {        
         let combos = [];
         for (let i=0; i < this.comboCount; i++) {
-          combos.push(i);
+          combos.push({id: i, chord1: "", chord2: ""});
         }
         this.combos = combos;
         this.activeComboIndex = -1;
+        this._combosChanged();        
       },
       nextCombo: function() {        
         if (this.activeComboIndex >= 0) {
@@ -98,8 +113,7 @@
           this.activeComboIndex = -1;
         }
       },
-      startRoutine: function() {
-        setInterval(function() {console.log("move");},1000);
+      startRoutine: function() {        
         let self = this;
         setInterval(function() { self.nextCombo(); },1000);
       }
