@@ -1,5 +1,6 @@
 <!--Polymer Imports-->
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 <!--1m2M Imports-->
 <link rel="import" href="ONEm2M-chord-combo-routine.html">
 <link rel="import" href="ONEm2M-chord-change-exercise.html">
@@ -7,17 +8,22 @@
 <dom-module id="ONEm2M-chord-change-lesson">
   <template>
     <style>
+        paper-button {
+            background-color: aliceblue;
+        }
         .practice-schedule {
           display: inline-block;
           vertical-align: top;
         }
         .exercises {
             display: inline-block;
-            margin-top: 80px;
+            margin-top: 60px;
         }
     </style>          
     <ONEm2M-chord-combo-routine id="routine" class="practice-schedule" combos="{{_combos}}" combo-count="{{exerciseCount}}" active-combo-index="{{activeExerciseIndex}}"  on-iron-select="_combosChanged"></ONEm2M-chord-combo-routine>
     <div class="exercises">
+        <paper-button on-tap="startLesson">Start Lesson</paper-button>
+        </br>        
         <template is="dom-repeat" items="{{exercises}}">            
             <ONEm2M-chord-change-exercise id="exercise{{item}}"></ONEm2M-chord-change-exercise>
         </template>
@@ -96,6 +102,16 @@
                 }
             }
         }, 1000); 
+      },      
+      startLesson: function() {
+        let self = this;
+        self.$.routine.nextCombo();            
+        self.$$("#exercise" + self.activeExerciseIndex).isActive = true;
+        let practiceSession = setInterval(function() {            
+            self.$$("#exercise" + self.activeExerciseIndex).isActive = false;            
+            self.$.routine.nextCombo();            
+            self.$$("#exercise" + self.activeExerciseIndex).isActive = true;
+        },65000);
       }
     });
   </script>

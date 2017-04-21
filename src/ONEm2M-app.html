@@ -6,10 +6,17 @@
 <link rel="import" href="ONEm2M-chord-combo-selector.html">
 
 <dom-module id="ONEm2M-app">
-  <template>    
-    <ONEm2M-metronome></ONEm2M-metronome>    
-    </br>
-    <ONEm2M-chord-change-lesson></ONEm2M-chord-change-lesson>        
+  <template>
+    <style>
+      .app-container {
+        margin: 2em;
+      }
+    </style>
+    <div class="app-container">    
+      <ONEm2M-metronome></ONEm2M-metronome>    
+      </br>
+      <ONEm2M-chord-change-lesson></ONEm2M-chord-change-lesson>        
+    </div>
   </template>
 
   <script>

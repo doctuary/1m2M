@@ -20,7 +20,7 @@
           padding: 0.5em;
           border-radius: 1em;        
           background-color: lightgray;
-          max-height: 240px;        
+          max-height: 260px;        
       }
       .controls {
         margin-bottom: 4px;
@@ -39,7 +39,7 @@
         margin-right: 1.5em;     
       }
       paper-icon-button {
-        float: right;
+        float: right;                
       }      
     </style>    
     <section id="visualizations">      
@@ -70,7 +70,7 @@
         isRecording: {
           type: Boolean,
           notify: true,
-          reflectToAttribute: true
+          reflectToAttribute: true          
         },
         threshold: {
           type: Number,
@@ -81,7 +81,7 @@
         }        
       },      
       
-      //_private functions
+      //_private functions      
       _thresholdChanged: function(val) {
         console.log(val); //may need to use this to signal updating of metronome volume
       },
@@ -117,7 +117,7 @@
           let volumeHistory = [];
           graphDrawer.toggle();
           function draw() {            
-            if ((new Date().getTime() - startTime) <= 10000) {
+            if ((new Date().getTime() - startTime) <= 60000) {
               drawVisual = requestAnimationFrame(draw);
             }
             else
@@ -132,7 +132,7 @@
             cumulativeVolume += getVolume(dataArray);
             if (volumePeriodLength == cumulationPeriod) {
               let volume = cumulativeVolume / cumulationPeriod / 20;
-              if (pulseDetected(dataArray) && volume > 1000) {
+              if (pulseDetected(dataArray) && volume > 100) {
                 pulseCount++;
                 pulseCounter.innerHTML = pulseCount + " : " + volume;
               }

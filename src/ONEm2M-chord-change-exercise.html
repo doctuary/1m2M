@@ -12,7 +12,7 @@
         }
         .chord-combination {            
             position: absolute;   
-            top: 2.8em;
+            top: 3.2em;
             left: 1.2em;           
         }
         .hidden-badge {
@@ -24,7 +24,7 @@
       </style>      
       <div class="exercise-container">
         <ONEm2M-chord-combo-badge id="badge" class="chord-combination hidden-badge" chord1="{{chord1}}" chord2="{{chord2}}"></ONEm2M-chord-combo-badge>
-        <ONEm2M-audio-pulse-monitor class="pulse-monitor" is-recording="{{isActive}}"></ONEm2M-audio-pulse-monitor>    
+        <ONEm2M-audio-pulse-monitor id="pulseMonitor" class="pulse-monitor" is-recording="{{isActive}}"></ONEm2M-audio-pulse-monitor>    
       <div>
   </template>
 
@@ -52,6 +52,7 @@
       _activationChanged: function() {
         if (this.isActive) {
           this.$.badge.classList.remove("hidden-badge");
+          this.$.pulseMonitor.captureAudio();
         } else {
           this.$.badge.classList.add("hidden-badge");
         }
