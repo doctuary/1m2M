@@ -108,10 +108,16 @@
         self.$.routine.nextCombo();            
         self.$$("#exercise" + self.activeExerciseIndex).isActive = true;
         let practiceSession = setInterval(function() {            
-            self.$$("#exercise" + self.activeExerciseIndex).isActive = false;            
-            self.$.routine.nextCombo();            
-            self.$$("#exercise" + self.activeExerciseIndex).isActive = true;
-        },65000);
+            if (self.activeExerciseIndex == -1) {
+                clearInterval(practiceSession);
+            } else {
+                self.$$("#exercise" + self.activeExerciseIndex).isActive = false;
+                self.$.routine.nextCombo();
+                if (self.activeExerciseIndex != -1) {
+                    self.$$("#exercise" + self.activeExerciseIndex).isActive = true;
+                }
+            }
+        },63000);
       }
     });
   </script>

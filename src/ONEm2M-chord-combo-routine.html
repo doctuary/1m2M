@@ -22,8 +22,7 @@
     </style>
     <div>
       <paper-input type="number" label="Combination Count" value="{{comboCount}}"></paper-input>
-      <button on-click="_changeCombos">New Routine</button>
-      <button on-click="nextCombo">Next Combo</button>
+      <button on-click="_changeCombos">New Routine</button>      
       </br>
       <template id="combos" is="dom-repeat" items="{{combos}}" as="combo">
         <div id="combo{{combo.id}}">
