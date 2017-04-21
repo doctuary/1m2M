@@ -1,12 +1,18 @@
 <!--Polymer Imports-->
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <!--1m2M Imports-->
 <link rel="import" href="ONEm2M-chord-bank.html">
 
 <dom-module id="ONEm2M-chord-combo-routine">
   <template>
-    <style>      
+    <style>
+      paper-input {
+        display: inline-block;
+        margin-left: 1em;
+      }      
       .chord-column {
         display: inline-block;
         width: 120px;
@@ -22,7 +28,7 @@
     </style>
     <div>
       <paper-input type="number" label="Combination Count" value="{{comboCount}}"></paper-input>
-      <button on-click="_changeCombos">New Routine</button>      
+      <paper-icon-button on-tap="_changeCombos" icon="refresh">New Routine</paper-icon-button>
       </br>
       <template id="combos" is="dom-repeat" items="{{combos}}" as="combo">
         <div id="combo{{combo.id}}">
