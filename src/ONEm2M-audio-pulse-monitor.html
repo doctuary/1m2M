@@ -132,7 +132,8 @@
             cumulativeVolume += getVolume(dataArray);
             if (volumePeriodLength == cumulationPeriod) {
               let volume = cumulativeVolume / cumulationPeriod / 20;
-              if (pulseDetected(dataArray) && volume > 100) {
+              if (pulseDetected(dataArray) && volume > 100) {                
+                graph.plotXY(x,graph.centerY,2);
                 pulseCount++;
                 pulseCounter.innerHTML = pulseCount + " : " + volume;
               }

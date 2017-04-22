@@ -196,6 +196,15 @@
           ctx.stroke();
           ctx.restore();
       },
+      plotXY: function(x,y,radius) {
+          let ctx = this.context;
+          ctx.beginPath();
+          ctx.arc(x,y,radius, 0, 2 * Math.PI, false);
+          ctx.fillStyle = "black";
+          ctx.fill();
+          ctx.save();
+          ctx.restore();
+      },
       //_private members
       _computeRange: function(min, max) {
           return max - min;
