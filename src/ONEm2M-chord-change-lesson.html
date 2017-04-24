@@ -23,6 +23,7 @@
     <ONEm2M-chord-combo-routine id="routine" class="practice-schedule" combos="{{_combos}}" combo-count="{{exerciseCount}}" active-combo-index="{{activeExerciseIndex}}"  on-iron-select="_combosChanged"></ONEm2M-chord-combo-routine>
     <div class="exercises">
         <paper-button on-tap="startLesson">Start Lesson</paper-button>
+        <paper-button on-tap="saveLesson">Save Lesson</paper-button>
         </br>        
         <template is="dom-repeat" items="{{exercises}}">            
             <ONEm2M-chord-change-exercise id="exercise{{item}}"></ONEm2M-chord-change-exercise>
@@ -102,7 +103,10 @@
                 }
             }
         }, 1000); 
-      },      
+      },
+      saveLesson: function() {
+          //TODO: save history
+      },
       startLesson: function() {
         let self = this;
         self.$.routine.nextCombo();            
@@ -112,6 +116,7 @@
                 clearInterval(practiceSession);
             } else {
                 self.$$("#exercise" + self.activeExerciseIndex).isActive = false;
+                //TODO: put exercise details in sessionStorage so they can be moved to localStorage later
                 self.$.routine.nextCombo();
                 if (self.activeExerciseIndex != -1) {
                     self.$$("#exercise" + self.activeExerciseIndex).isActive = true;

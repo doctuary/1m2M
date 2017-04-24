@@ -23,5 +23,11 @@
   "devDependencies": {
     "web-component-tester": "^4.0.0"
   },
+  "resolutions": {
+    "paper-ripple": "^1.0.0",
+    "webcomponentsjs": "^0.7.24",
+    "font-roboto": "^1.0.1",
+    "polymer": "^1.6.0"
+  },
   "private": true
 }

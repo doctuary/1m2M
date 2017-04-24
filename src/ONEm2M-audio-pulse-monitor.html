@@ -72,6 +72,11 @@
           notify: true,
           reflectToAttribute: true          
         },
+        pulseCount: {
+          type: Number,
+          notify: true,
+          reflectToAttribute: true
+        },
         threshold: {
           type: Number,
           notify: true,
@@ -99,7 +104,8 @@
         var canvasContext = this.$.graph1.context;
 
         var pulseCounter = this.$.pulseCounter;
-        var pulseCount = 0;
+        let pulseCount = this.pulseCount;
+        pulseCount = 0;
 
         var drawVisual;
 
