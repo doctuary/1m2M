@@ -73,9 +73,7 @@
           reflectToAttribute: true          
         },
         pulseCount: {
-          type: Number,
-          notify: true,
-          reflectToAttribute: true
+          type: Number
         },
         threshold: {
           type: Number,
@@ -104,8 +102,7 @@
         var canvasContext = this.$.graph1.context;
 
         var pulseCounter = this.$.pulseCounter;
-        let pulseCount = this.pulseCount;
-        pulseCount = 0;
+        let pulseCount = 0;        
 
         var drawVisual;
 
@@ -130,6 +127,7 @@
             {
               track.stop();
               sessionStorage.setItem("volumeHistory", volumeHistory);
+              self.pulseCount = pulseCount;
               self.isRecording = false;
               graphDrawer.toggle();
             }

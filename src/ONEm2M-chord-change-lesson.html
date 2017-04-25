@@ -113,10 +113,11 @@
         self.$$("#exercise" + self.activeExerciseIndex).isActive = true;
         let practiceSession = setInterval(function() {            
             if (self.activeExerciseIndex == -1) {
+                self.$$("#exercise" + (self.exerciseCount - 1)).saveExercise();
                 clearInterval(practiceSession);
             } else {
-                self.$$("#exercise" + self.activeExerciseIndex).isActive = false;
-                //TODO: put exercise details in sessionStorage so they can be moved to localStorage later
+                self.$$("#exercise" + self.activeExerciseIndex).isActive = false;                
+                self.$$("#exercise" + self.activeExerciseIndex).saveExercise();
                 self.$.routine.nextCombo();
                 if (self.activeExerciseIndex != -1) {
                     self.$$("#exercise" + self.activeExerciseIndex).isActive = true;

@@ -46,16 +46,44 @@
           type: Boolean,
           notify: true,
           observer: "_activationChanged"
+        },
+        startTime: {
+          type: Date          
         }
       },
       // _private members
       _activationChanged: function() {
         if (this.isActive) {
           this.$.badge.classList.remove("hidden-badge");
+          this.startTime = Date.now();
           this.$.pulseMonitor.captureAudio();
         } else {
           this.$.badge.classList.add("hidden-badge");
         }
+      },
+      // public members
+      saveExercise: function() {
+        let exercise = {
+          startTime: this.startTime,
+          length: 60,
+          chord1: this.chord1,
+          chord2: this.chord2,
+          tempo: 120,
+          strums: this.$.pulseMonitor.pulseCount
+        }
+        let exercises = sessionStorage.getItem("exercises");        
+        if (exercises) {
+          try {
+            exercises = JSON.parse(exercises);
+          }
+          catch (e) {
+            exercises = [];
+          }
+        } else {
+          exercises = [];
+        }
+        exercises.push(exercise);
+        sessionStorage.setItem("exercises", JSON.stringify(exercises));
       }
     });
   </script>
