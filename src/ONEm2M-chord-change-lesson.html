@@ -109,7 +109,30 @@
           let exercises = sessionStorage.getItem("exercises");
           console.log(exercises);
           //TODO: put them in indexedDB
-          
+          let db;
+          function openDb() {
+              console.log("openDb...");
+              let req = indexedDB.open("1m2M", 1);
+              req.onsuccess = function (evt) {
+                  db = this.result;
+                  console.log("openDb DONE");
+              };
+              req.onerror = function (evt) {
+                  console.error("openDb: ", evt.target.errorCode);
+              };
+              req.onupgradeneeded = function (evt) {
+                  console.log("openDb.onupgradeneeded");
+                  let store = evt.currentTarget.result.createObjectStore(
+                      "exercises", {keyPath: "id", autoIncrement: true});
+                  store.createIndex("startTime","startTime",{unique: true});
+                  store.createIndex("length","length",{unique: false});
+                  store.createIndex("chord1","chord1",{unique: false});
+                  store.createIndex("chord2","chord2",{unique: false});
+                  store.createIndex("tempo","tempo",{unique: false});
+                  store.createIndex("strums","strums",{unique: false});
+              };
+          }
+          openDb();
           //TOOD: notify any listeners that the lesson history has been updated
           //TODO: have listeners refresh their displays          
       },
