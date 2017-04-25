@@ -28,7 +28,7 @@
         <template is="dom-repeat" items="{{exercises}}">            
             <ONEm2M-chord-change-exercise id="exercise{{item}}"></ONEm2M-chord-change-exercise>
         </template>
-    </div>
+    </div>    
   </template>
 
   <script>
@@ -104,8 +104,14 @@
             }
         }, 1000); 
       },
-      saveLesson: function() {
-          //TODO: save history
+      saveLesson: function() {          
+          //TODO: get exercises from sessionStorage
+          let exercises = sessionStorage.getItem("exercises");
+          console.log(exercises);
+          //TODO: put them in indexedDB
+          
+          //TOOD: notify any listeners that the lesson history has been updated
+          //TODO: have listeners refresh their displays          
       },
       startLesson: function() {
         let self = this;

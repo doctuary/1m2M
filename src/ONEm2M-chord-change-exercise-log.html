@@ -1,0 +1,65 @@
+<!--Polymer Imports-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="ONEm2M-chord-change-exercise-log">
+  <template>
+    <style>
+        header {            
+            font-weight: bold;
+        }
+        .table {                   
+            background-color: lightgray;
+            width: 100%;
+            border-style: solid;
+            border-width: 2px;
+            border-color: black;
+            border-radius: 12px;
+        }
+        .row {
+            margin: 4px;
+        }
+        .row:nth-child(odd) {
+            background-color: aliceblue;
+        } 
+        .cell {
+            display: inline-block;
+            width: 15%;
+            text-align: center;
+        }
+    </style>
+    <div class="table">
+      <header class="row">
+        <div class="cell">Start Time</div>
+        <div class="cell">Length</div>
+        <div class="cell">Chord 1</div>
+        <div class="cell">Chord 2</div>
+        <div class="cell">Tempo</div>
+        <div class="cell">Strums</div>
+      </header>
+      <template id="log" is="dom-repeat" items="{{exercises}}" as="exercise">
+        <div id="exercise{{exercise.startTime}}" class="row">
+          <div class="cell">{{exercise.startTime}}</div>
+          <div class="cell">{{exercise.length}}</div>
+          <div class="cell">{{exercise.chord1}}</div>
+          <div class="cell">{{exercise.chord2}}</div>
+          <div class="cell">{{exercise.tempo}}</div>
+          <div class="cell">{{exercise.strums}}</div>
+        </div>
+      </template>
+    </div>      
+  </template>
+
+  <script>
+    Polymer({
+      is: 'ONEm2M-chord-change-exercise-log',
+
+      properties: {
+          exercises: {
+              type: Array,
+              value: [{startTime: 1, length: 60, chord1: "A", chord2: "B", tempo:60, strums: 59},{startTime: 1000, length: 60, chord1: "C", chord2: "D", tempo:60, strums: 61}],
+              notify: true
+          }
+      }          
+    });
+  </script>
+</dom-module>

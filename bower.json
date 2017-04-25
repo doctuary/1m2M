@@ -18,7 +18,8 @@
     "polymer": "Polymer/polymer#^1.6.0",
     "paper-slider": "PolymerElements/paper-slider#^1.0.13",
     "paper-card": "^0.1.5",
-    "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#^1.5.0"
+    "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#^1.5.0",
+    "app-storage": "PolymerElements/app-storage#^1.0.0"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"
