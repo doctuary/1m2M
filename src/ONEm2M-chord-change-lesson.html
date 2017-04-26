@@ -105,9 +105,8 @@
         }, 1000); 
       },
       saveLesson: function() {          
-          //TODO: get exercises from sessionStorage
           let exercises = sessionStorage.getItem("exercises");
-          console.log(exercises);
+          exercises = JSON.parse(exercises);          
           //TODO: put them in indexedDB
           let db;
           function openDb() {
@@ -132,7 +131,33 @@
                   store.createIndex("strums","strums",{unique: false});
               };
           }
+          function getObjectStore(storeName, mode) {
+              let tx = db.transaction(storeName, mode);
+              return tx.objectStore(storeName);
+          }
+          function addExercise(exercise) {
+              console.log("addExercise arguments: ", arguments);
+              let store = getObjectStore("exercises", "readwrite");
+              let req;
+              try {
+                  req = store.add(exercise);
+              } catch (e) {
+                  throw e;
+              }
+              req.onsuccess = function (evt) {
+                  console.log("Insertion in DB successful");                  
+              };
+              req.onerror = function () {
+                  console.error("addExercise error", this.error);
+              }
+          }
           openDb();
+          setTimeout(function() {
+              for (let i = 0; i < exercises.length; i++) {
+                addExercise(exercises[i]);
+              }
+            },1000);
+                    
           //TOOD: notify any listeners that the lesson history has been updated
           //TODO: have listeners refresh their displays          
       },
