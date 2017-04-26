@@ -56,9 +56,85 @@
       properties: {
           exercises: {
               type: Array,
-              value: [{startTime: 1, length: 60, chord1: "A", chord2: "B", tempo:60, strums: 59},{startTime: 1000, length: 60, chord1: "C", chord2: "D", tempo:60, strums: 61}],
+              value: [], // [{startTime: 1, length: 60, chord1: "A", chord2: "B", tempo:60, strums: 59},{startTime: 1000, length: 60, chord1: "C", chord2: "D", tempo:60, strums: 61}],
               notify: true
           }
+      },
+
+      //lifecycle callbacks
+      attached: function() {
+        let db;
+        let openDb = new Promise(function(resolve, reject) {
+          console.log("openDb...");
+          let req = indexedDB.open("1m2M", 1);
+          req.onsuccess = function (evt) {
+              db = this.result;
+              console.log("openDb DONE");
+              resolve(this.result);
+          };
+          req.onerror = function (evt) {
+              console.error("openDb: ", evt.target.errorCode);
+              reject(Error("openDb failed"));
+          };
+          req.onupgradeneeded = function (evt) {
+              console.log("openDb.onupgradeneeded");
+              let store = evt.currentTarget.result.createObjectStore(
+                  "exercises", {keyPath: "id", autoIncrement: true});
+              store.createIndex("startTime","startTime",{unique: true});
+              store.createIndex("length","length",{unique: false});
+              store.createIndex("chord1","chord1",{unique: false});
+              store.createIndex("chord2","chord2",{unique: false});
+              store.createIndex("tempo","tempo",{unique: false});
+              store.createIndex("strums","strums",{unique: false});
+          };
+        });
+        function getObjectStore(storeName, mode) {
+          let tx = db.transaction(storeName, mode);
+          return tx.objectStore(storeName);
+        }
+        function displayExerciseLog(store) {          
+          console.log("displayExerciseLog");
+          
+          if (typeof store == "undefined")
+            store = getObjectStore("exercises","readonly");
+          
+          let req;
+          req = store.count();
+          req.onsuccess = function(evt) {
+            console.log("There are " + evt.target.result + "records in the object store.");
+          };
+          req.onerror = function(evt) {
+            console.error("add error", this.error);
+          };
+          
+          req = store.openCursor();
+          req.onsuccess = function(evt) {
+            let cursor = evt.target.result;
+
+            // If the cursor is pointing at somethign, ask for the data
+            if (cursor) {
+                console.log("displayExerciseLog cursor:", cursor);
+                req = store.get(cursor.key);
+                req.onsuccess = function (evt) {
+                  let value = evt.target.result;
+                  self.exercises.push(value);
+                }
+
+                // Move on to the next object in store
+                cursor.continue();
+            } else {
+              console.log("No more entries");
+              console.log(self.exercises);
+              self.$.log.render();
+            }
+          };          
+        }
+        let self = this;
+        openDb.then(function(result) {
+          displayExerciseLog();          
+        }, function(err) {
+          console.log(err);
+        });
       }          
     });
   </script>
