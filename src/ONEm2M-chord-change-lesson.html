@@ -107,7 +107,6 @@
       saveLesson: function() {          
           let exercises = sessionStorage.getItem("exercises");
           exercises = JSON.parse(exercises);          
-          //TODO: put them in indexedDB
           let db;
           function openDb() {
               console.log("openDb...");
@@ -135,8 +134,7 @@
               let tx = db.transaction(storeName, mode);
               return tx.objectStore(storeName);
           }
-          function addExercise(exercise) {
-              console.log("addExercise arguments: ", arguments);
+          function addExercise(exercise) {              
               let store = getObjectStore("exercises", "readwrite");
               let req;
               try {
@@ -156,6 +154,7 @@
               for (let i = 0; i < exercises.length; i++) {
                 addExercise(exercises[i]);
               }
+              sessionStorage.removeItem("exercises");
             },1000);
                     
           //TOOD: notify any listeners that the lesson history has been updated
