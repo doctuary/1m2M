@@ -136,7 +136,7 @@
             cumulativeVolume += getVolume(dataArray);
             if (volumePeriodLength == cumulationPeriod) {
               let volume = cumulativeVolume / cumulationPeriod / 20;
-              if (pulseDetected(dataArray) && volume > 100) {                
+              if (pulseDetected(dataArray)) {                
                 graph.plotXY(x,graph.centerY,2);
                 pulseCount++;
                 pulseCounter.innerHTML = pulseCount + " : " + volume;
@@ -164,32 +164,18 @@
           var volume = 0;
           for (var i = 0; i < amplitudeData.length; i++) {
              volume += amplitudeData[i];
-          }
-          //volume = Math.min(...amplitudeData.filter(Boolean));
+          }          
           return volume;
         }
-
-        var priorVolume = 0;
-        var volumeIncrement = 0;
-        var priorVolumeDirection;
-        var inStrum = false;
-        /*TAG:
-        * Look for a jump of at least x (start with x=50), count that as the strum
-        * then wait until you see consistent decreases before resetting to look for next jump/strum
-        */
+                
+        let priorDelta = 0;
+        let priorVolume = 0;
+        //TAG: count instances in which sign of first derivative changes from negative to positive                
         function pulseDetected(amplitudeData) {
-          var inflectionFound = false;
-          var currentVolume = getVolume(amplitudeData);          
-          volumeIncrement = currentVolume - priorVolume;
+          let currentVolume = getVolume(amplitudeData);
+          let inflectionFound = (priorDelta < 0 && currentVolume > priorVolume);          
+          priorDelta = currentVolume - priorVolume;
           priorVolume = currentVolume;
-          if (volumeIncrement > 50) {
-            if (!inStrum) {
-              inStrum = true;
-              inflectionFound = true;
-            }
-          } else if (volumeIncrement < 0) {
-            inStrum = false;
-          }
           return inflectionFound;
         }
 
