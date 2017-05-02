@@ -27,6 +27,7 @@
             text-align: center;
         }
     </style>
+    <button on-click="_manualRefresh">Manual Refresh</button>
     <div class="table">
       <header class="row">
         <div class="cell">Start Time</div>
@@ -56,13 +57,17 @@
       properties: {
           exercises: {
               type: Array,
-              value: [], // [{startTime: 1, length: 60, chord1: "A", chord2: "B", tempo:60, strums: 59},{startTime: 1000, length: 60, chord1: "C", chord2: "D", tempo:60, strums: 61}],
+              value: [],
               notify: true
           }
       },
 
       //lifecycle callbacks
       attached: function() {
+        this._getItemsFromIndexedDB();
+      },
+      // _private members      
+      _getItemsFromIndexedDB: function() {
         let db;
         let openDb = new Promise(function(resolve, reject) {
           console.log("openDb...");
@@ -101,31 +106,32 @@
           let req;
           req = store.count();
           req.onsuccess = function(evt) {
-            console.log("There are " + evt.target.result + "records in the object store.");
+            console.log("There are " + evt.target.result + " records in the object store.");
           };
           req.onerror = function(evt) {
             console.error("add error", this.error);
           };
           
+          let records = [];
           req = store.openCursor();
           req.onsuccess = function(evt) {
             let cursor = evt.target.result;
 
-            // If the cursor is pointing at somethign, ask for the data
+            // If the cursor is pointing at something, ask for the data
             if (cursor) {
                 console.log("displayExerciseLog cursor:", cursor);
                 req = store.get(cursor.key);
                 req.onsuccess = function (evt) {
-                  let value = evt.target.result;
-                  self.exercises.push(value);
+                  let value = cursor.value;                  
+                  records.push(value);
                 }
-
                 // Move on to the next object in store
                 cursor.continue();
             } else {
               console.log("No more entries");
-              console.log(self.exercises);
-              self.$.log.render();
+              //TAG: pushing doesn't work, the log will expand to show rows for the records, but the field values will all be blank
+              //TAG: setting the property directly seems to do the trick              
+              self.exercises = records;              
             }
           };          
         }
