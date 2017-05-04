@@ -122,8 +122,10 @@
                 req = store.get(cursor.key);
                 req.onsuccess = function (evt) {
                   let value = cursor.value;
-                  value.startTime = new Date(value.startTime);
-                  value.startTime = value.startTime.toDateString();
+                  if (value) {
+                    value.startTime = new Date(value.startTime);
+                    value.startTime = value.startTime.toDateString();
+                  }
                   records.push(value);
                 }
                 // Move on to the next object in store
