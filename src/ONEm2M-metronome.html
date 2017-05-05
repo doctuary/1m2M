@@ -3,10 +3,23 @@
 <!--Polymer Imports-->
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-slider/paper-slider.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<!--1m2M Imports-->
+<link rel="import" href="ONEm2M-icons.html">
 
 <dom-module id="ONEm2M-metronome">
   <template>
-    <button on-tap="play">Start Metronome</button>
+    <style>
+        paper-icon-button {
+            display: inline-block;
+            vertical-align: top;
+        }
+        paper-slider {
+            display: inline-block;
+            margin-right: 20px;
+        }
+    </style>
+    <paper-icon-button on-tap="play" icon="1m2M-icons:metronome">Start Metronome</paper-icon-button>
     <paper-slider min="30" max="160" value="{{tempo}}"></paper-slider>  
   </template>
 

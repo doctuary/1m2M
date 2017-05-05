@@ -1,5 +1,11 @@
 <!--Polymer Imports-->
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <!--1m2M Imports-->
 <link rel="import" href="ONEm2M-metronome.html">
 <link rel="import" href="ONEm2M-chord-change-lesson.html">
@@ -8,6 +14,24 @@
 <dom-module id="ONEm2M-app">
   <template>
     <style>
+      :host {
+        --dark-primary-color:       #455A64;
+        --default-primary-color:    #607D8B;
+        --light-primary-color:      #CFD8DC;
+        --text-primary-color:       #FFFFFF;
+        --accent-color:             #FF5722;
+        --primary-background-color: #CFD8DC;
+        --primary-text-color:       #212121;
+        --secondary-text-color:     #757575;
+        --disabled-text-color:      #BDBDBD;
+        --divider-color:            #BDBDBD;
+      }
+
+      app-header {
+        color: var(--text-primary-color);
+        background-color: var(--dark-primary-color);
+      }      
+
       ONEm2M-chord-change-exercise-log {
         flex: 1 1 auto;
       }
@@ -18,13 +42,29 @@
         height: 100%;
       }      
     </style>
-    <div class="app-container">    
-      <ONEm2M-metronome></ONEm2M-metronome>    
-      </br>
-      <ONEm2M-chord-change-lesson></ONEm2M-chord-change-lesson>
-      </br>
-      <ONEm2M-chord-change-exercise-log></ONEm2M-chord-change-exercise-log>
-    </div>
+    
+    <app-drawer-layout fullbleed>
+      <!-- Drawer content -->
+
+      <!-- Main content -->
+      <app-header-layout has-scrolling-region>
+
+        <app-header condenses reveals effects="waterfall">
+          <app-toolbar>
+            <div main-title>Chord Change Counter</div>
+            <ONEm2M-metronome></ONEm2M-metronome>
+          </app-toolbar>
+        </app-header>
+
+        <div class="app-container">    
+              
+          </br>
+          <ONEm2M-chord-change-lesson></ONEm2M-chord-change-lesson>
+          </br>
+          <ONEm2M-chord-change-exercise-log></ONEm2M-chord-change-exercise-log>
+        </div>
+      </app-header-layout>
+    </app-drawer-layout>
   </template>
 
   <script>
