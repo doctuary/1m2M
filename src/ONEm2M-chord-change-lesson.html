@@ -19,7 +19,7 @@
         .exercises {
             display: inline-block;            
         }
-    </style>          
+    </style>
     <ONEm2M-chord-combo-routine id="routine" class="practice-schedule" combos="{{_combos}}" combo-count="{{exerciseCount}}" active-combo-index="{{activeExerciseIndex}}"  on-iron-select="_combosChanged"></ONEm2M-chord-combo-routine>
     <div class="exercises">
         <paper-button on-tap="startLesson">Start Lesson</paper-button>
@@ -28,7 +28,7 @@
         <template is="dom-repeat" items="{{exercises}}">            
             <ONEm2M-chord-change-exercise id="exercise{{item}}"></ONEm2M-chord-change-exercise>
         </template>
-    </div>    
+    </div>
   </template>
 
   <script>

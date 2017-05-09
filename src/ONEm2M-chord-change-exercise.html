@@ -1,6 +1,7 @@
 <!--Polymer Imports-->
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <!--1m2M Imports-->
+<link rel="import" href="ONEm2M-chord-bank.html">
 <link rel="import" href="ONEm2M-chord-combo-badge.html">
 <link rel="import" href="ONEm2M-audio-pulse-monitor.html">
 
@@ -23,6 +24,10 @@
         }
       </style>      
       <div class="exercise-container">
+        <div id="exerciseControls">
+          <ONEm2M-chord-bank id="chord1" index="1" selected-chord="{{chord1}}"></ONEm2M-chord-bank>
+          <ONEm2M-chord-bank id="chord2" index="2" selected-chord="{{chord2}}"></ONEm2M-chord-bank>        
+        </div>
         <ONEm2M-chord-combo-badge id="badge" class="chord-combination hidden-badge" chord1="{{chord1}}" chord2="{{chord2}}"></ONEm2M-chord-combo-badge>
         <ONEm2M-audio-pulse-monitor id="pulseMonitor" class="pulse-monitor" is-recording="{{isActive}}"></ONEm2M-audio-pulse-monitor>    
       <div>

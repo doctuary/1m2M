@@ -1,0 +1,46 @@
+<!--Polymer Imports-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-slider/paper-slider.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/av-icons.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+
+<dom-module id="ONEm2M-microphone-sensitivity">
+  <template>
+      <style>
+        paper-icon-button {
+            display: inline-block;
+            vertical-align: top;
+        }
+        paper-slider {
+            display: inline-block;
+            margin-right: 20px;
+            --paper-slider-knob-color: var(--accent-color);
+            --paper-slider-active-color: var(--accent-color);
+        }
+    </style>
+    <paper-icon-button icon="av:mic">Start Metronome</paper-icon-button>
+    <paper-slider id="thresholdSlider" min="2500" max="7500" value="{{threshold}}"></paper-slider>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'ONEm2M-microphone-sensitivity',
+
+      properties: {
+          threshold: {
+            type: Number,
+            notify: true,
+            reflectToAttribute: true,
+            value: 5000,          
+            observer: "_thresholdChanged"
+            }          
+      },
+      
+      //_private functions      
+      _thresholdChanged: function(val) {
+        console.log(val); //may need to use this to signal updating of metronome volume
+      },
+    });
+  </script>
+</dom-module>

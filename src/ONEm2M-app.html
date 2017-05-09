@@ -7,6 +7,7 @@
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <!--1m2M Imports-->
+<link rel="import" href="ONEm2M-microphone-sensitivity.html">
 <link rel="import" href="ONEm2M-metronome.html">
 <link rel="import" href="ONEm2M-chord-change-lesson.html">
 <link rel="import" href="ONEm2M-chord-change-exercise-log.html">
@@ -30,17 +31,7 @@
       app-header {
         color: var(--text-primary-color);
         background-color: var(--dark-primary-color);
-      }      
-
-      ONEm2M-chord-change-exercise-log {
-        flex: 1 1 auto;
       }
-      .app-container {
-        display: flex;
-        flex-flow: column;
-        margin: 2em;
-        height: 100%;
-      }      
     </style>
     
     <app-drawer-layout fullbleed>
@@ -51,18 +42,13 @@
 
         <app-header fixed condenses reveals effects="waterfall">
           <app-toolbar>
-            <div main-title>Chord Change Counter</div>
+            <div main-title>Chord Change Counter</div>            
+            <ONEm2M-microphone-sensitivity></ONEm2M-microphone-sensitivity>
             <ONEm2M-metronome></ONEm2M-metronome>
           </app-toolbar>
         </app-header>
-
-        <div class="app-container">    
-              
-          </br>
-          <ONEm2M-chord-change-lesson></ONEm2M-chord-change-lesson>
-          </br>
-          <ONEm2M-chord-change-exercise-log></ONEm2M-chord-change-exercise-log>
-        </div>
+        <ONEm2M-chord-change-lesson></ONEm2M-chord-change-lesson>
+        <ONEm2M-chord-change-exercise-log></ONEm2M-chord-change-exercise-log>            
       </app-header-layout>
     </app-drawer-layout>
   </template>
