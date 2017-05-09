@@ -11,24 +11,19 @@
         .exercise-container {
             position: relative;            
         }
-        .chord-combination {            
-            position: absolute;   
-            top: 3.2em;
-            left: 1.2em;           
-        }
-        .hidden-badge {
-          display: none;
-        }
+        .exercise-controls {
+          position: absolute;
+        }        
         .pulse-monitor {
-            display: inline-block;            
+            display: inline-block;
+            width: 100%;         
         }
       </style>      
       <div class="exercise-container">
-        <div id="exerciseControls">
+        <div class="exercise-controls">
           <ONEm2M-chord-bank id="chord1" index="1" selected-chord="{{chord1}}"></ONEm2M-chord-bank>
           <ONEm2M-chord-bank id="chord2" index="2" selected-chord="{{chord2}}"></ONEm2M-chord-bank>        
-        </div>
-        <ONEm2M-chord-combo-badge id="badge" class="chord-combination hidden-badge" chord1="{{chord1}}" chord2="{{chord2}}"></ONEm2M-chord-combo-badge>
+        </div>        
         <ONEm2M-audio-pulse-monitor id="pulseMonitor" class="pulse-monitor" is-recording="{{isActive}}"></ONEm2M-audio-pulse-monitor>    
       <div>
   </template>
@@ -58,12 +53,9 @@
       },
       // _private members
       _activationChanged: function() {
-        if (this.isActive) {
-          this.$.badge.classList.remove("hidden-badge");
+        if (this.isActive) {          
           this.startTime = Date.now();
           this.$.pulseMonitor.captureAudio();
-        } else {
-          this.$.badge.classList.add("hidden-badge");
         }
       },
       // public members

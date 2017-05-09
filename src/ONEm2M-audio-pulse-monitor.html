@@ -1,6 +1,5 @@
 <!--Polymer Imports-->
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/paper-slider/paper-slider.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-icons/av-icons.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
@@ -14,8 +13,7 @@
       section {
         max-height: 300px;
       }
-      .graph-container {
-          display: inline-block;
+      .graph-container {          
           margin: 0.1em;        
           padding: 0.5em;
           border-radius: 1em;        
@@ -24,6 +22,7 @@
       }
       .controls {
         margin-bottom: 4px;
+        text-align: right;
       }
       label {
         display: inline-block;        
@@ -31,13 +30,9 @@
       }
       .counter {
         display: inline-block;
-        min-width: 2em;
-      }
-      paper-slider {
-        vertical-align: bottom;
-        display: inline-block;
-        margin-right: 1.5em;     
-      }
+        width: 40px;
+        margin-right: 40px;
+      }      
       paper-icon-button {
         float: right;                
       }      
@@ -137,7 +132,7 @@
               if (pulseDetected(dataArray)) {                
                 graph.plotXY(x,graph.centerY,2);
                 pulseCount++;
-                pulseCounter.innerHTML = pulseCount + " : " + volume;
+                pulseCounter.innerHTML = pulseCount;
               }
               canvasContext.fillStyle = 'firebrick';
               canvasContext.fillRect(x,graph.centerY - volume / 2,barWidth,volume / 2);
