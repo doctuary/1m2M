@@ -45,11 +45,11 @@
         <app-header fixed condenses reveals effects="waterfall">
           <app-toolbar>
             <div main-title>Chord Change Counter</div>
-            <ONEm2M-lesson-configuration exercise-count="{{exerciseCount}}"></ONEm2M-lesson-configuration>
-            <paper-icon-button id="startPauseLesson" icon="av:play-arrow" on-tap="_toggleLesson"></paper-icon-button>
-            <paper-icon-button id="saveLesson" icon="save" on-tap="_saveLesson"></paper-icon-button>       
             <ONEm2M-microphone-sensitivity></ONEm2M-microphone-sensitivity>
             <ONEm2M-metronome></ONEm2M-metronome>
+            <ONEm2M-lesson-configuration exercise-count="{{exerciseCount}}"></ONEm2M-lesson-configuration>
+            <paper-icon-button id="startPauseLesson" icon="av:play-arrow" on-tap="_toggleLesson"></paper-icon-button>
+            <paper-icon-button id="saveLesson" icon="save" on-tap="_saveLesson"></paper-icon-button>                   
           </app-toolbar>
         </app-header>
         <ONEm2M-chord-change-lesson id="lesson" exercise-count="{{exerciseCount}}"></ONEm2M-chord-change-lesson>
@@ -73,7 +73,7 @@
       },
       //_private members
       _saveLesson: function() {
-        //TODO: save lesson
+        this.$.lesson.saveLesson();
       },
       _toggleLesson: function() {
         this.isPracticing = !this.isPracticing;

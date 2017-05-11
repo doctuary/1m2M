@@ -7,25 +7,16 @@
 
 <dom-module id="ONEm2M-chord-change-lesson">
   <template>
-    <style>
-        paper-button {
-            background-color: var(--light-primary-color);
-            margin-bottom: 0.1em;
-        }        
-        .practice-schedule {
-          display: inline-block;
-          vertical-align: top;
-        }
+    <style>                
         .exercises {
             display: inline-block;            
             width: 100%;
         }
     </style>
-    <ONEm2M-chord-combo-routine id="routine" class="practice-schedule" combos="{{_combos}}" combo-count="{{exerciseCount}}" active-combo-index="{{activeExerciseIndex}}"  on-iron-select="_combosChanged"></ONEm2M-chord-combo-routine>
+    <!--<ONEm2M-chord-combo-routine id="routine" class="practice-schedule" combos="{{_combos}}" combo-count="{{exerciseCount}}" active-combo-index="{{activeExerciseIndex}}"  on-iron-select="_combosChanged"></ONEm2M-chord-combo-routine>
+    <paper-button on-tap="startLesson">Start Lesson</paper-button>
+    <paper-button on-tap="saveLesson">Save Lesson</paper-button>-->
     <div class="exercises">
-        <paper-button on-tap="startLesson">Start Lesson</paper-button>
-        <paper-button on-tap="saveLesson">Save Lesson</paper-button>
-        </br>        
         <template is="dom-repeat" items="{{exercises}}">            
             <ONEm2M-chord-change-exercise id="exercise{{item}}"></ONEm2M-chord-change-exercise>
         </template>
