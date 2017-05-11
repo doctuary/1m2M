@@ -46,7 +46,8 @@
           <app-toolbar>
             <div main-title>Chord Change Counter</div>
             <ONEm2M-lesson-configuration exercise-count="{{exerciseCount}}"></ONEm2M-lesson-configuration>
-            <paper-icon-button id="startPauseLesson" icon="av:play-arrow" on-tap="_toggleLesson"></paper-icon-button>         
+            <paper-icon-button id="startPauseLesson" icon="av:play-arrow" on-tap="_toggleLesson"></paper-icon-button>
+            <paper-icon-button id="saveLesson" icon="save" on-tap="_saveLesson"></paper-icon-button>       
             <ONEm2M-microphone-sensitivity></ONEm2M-microphone-sensitivity>
             <ONEm2M-metronome></ONEm2M-metronome>
           </app-toolbar>
@@ -71,6 +72,9 @@
         }
       },
       //_private members
+      _saveLesson: function() {
+        //TODO: save lesson
+      },
       _toggleLesson: function() {
         this.isPracticing = !this.isPracticing;
         this.$.startPauseLesson.icon= (this.isPracticing) ? "av:pause" : "av:play-arrow";
