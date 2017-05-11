@@ -12,10 +12,7 @@
             display: inline-block;            
             width: 100%;
         }
-    </style>
-    <!--<ONEm2M-chord-combo-routine id="routine" class="practice-schedule" combos="{{_combos}}" combo-count="{{exerciseCount}}" active-combo-index="{{activeExerciseIndex}}"  on-iron-select="_combosChanged"></ONEm2M-chord-combo-routine>
-    <paper-button on-tap="startLesson">Start Lesson</paper-button>
-    <paper-button on-tap="saveLesson">Save Lesson</paper-button>-->
+    </style>    
     <div class="exercises">
         <template is="dom-repeat" items="{{exercises}}">            
             <ONEm2M-chord-change-exercise id="exercise{{item}}"></ONEm2M-chord-change-exercise>
@@ -26,12 +23,7 @@
   <script>
     Polymer({
       is: 'ONEm2M-chord-change-lesson',
-      properties: {
-        _combos: {
-            type: Array,
-            notify: true,
-            observer: "_combosChanged"
-        },
+      properties: {        
         activeExerciseIndex: {
             type: Number,
             notify: true,
@@ -56,24 +48,7 @@
       _activeExerciseChanged: function() {          
           
       },
-      _combosChanged: function(e) {
-          if (e.path) {
-            for (let i = 0; i < e.path.length; i++) {                
-                let id = e.path[i].id;
-                if (id) {
-                    if (id.includes("combo") && id.includes("Chord")) {
-                        let comboIndex = Number(id.substring(5,6));
-                        let chordIndex = Number(id.substring(id.length - 1, id.length));
-                        let exercise = this.$$("#exercise" + comboIndex);
-                        if (exercise) {                            
-                            exercise["chord" + chordIndex] = e.detail.item.innerText;
-                        }
-                    }
-                }
-            }
-          }
-      },
-      _exerciseCountChanged: function() {        
+      _exerciseCountChanged: function() {
         this.newLesson();        
       },
       
@@ -84,17 +59,18 @@
           exercises.push(i);
         }
         this.exercises = exercises;
-        let routine = this.$.routine;
-        let self = this;
-        setTimeout(function() {
-            for (let i=0; i< self.exerciseCount; i++) {
-                let exercise = self.$$("#exercise" + i);
-                if (exercise) {                    
-                    exercise.chord1 = routine.combos[i].chord1;
-                    exercise.chord2 = routine.combos[i].chord2;
-                }
-            }
-        }, 1000); 
+        this.activeExerciseIndex = -1;        
+      },
+      nextExercise: function() {        
+        if (this.activeExerciseIndex >= 0) {
+          //this.$$("#combo" + this.activeComboIndex).classList.remove("active-combo");
+        }
+        this.activeExerciseIndex++;
+        if (this.activeExerciseIndex < this.exerciseCount) {
+          //this.$$("#combo" + this.activeComboIndex).classList.add("active-combo");
+        } else {
+          this.activeExerciseIndex = -1;
+        }
       },
       saveLesson: function() {          
           let exercises = sessionStorage.getItem("exercises");
@@ -154,7 +130,9 @@
       },
       startLesson: function() {
         let self = this;
-        self.$.routine.nextCombo();            
+        console.log(self.activeExerciseIndex);
+        self.nextExercise();
+        console.log(self.activeExerciseIndex);
         self.$$("#exercise" + self.activeExerciseIndex).isActive = true;
         let practiceSession = setInterval(function() {            
             if (self.activeExerciseIndex == -1) {
@@ -163,7 +141,7 @@
             } else {
                 self.$$("#exercise" + self.activeExerciseIndex).isActive = false;                
                 self.$$("#exercise" + self.activeExerciseIndex).saveExercise();
-                self.$.routine.nextCombo();
+                self.nextExercise();
                 if (self.activeExerciseIndex != -1) {
                     self.$$("#exercise" + self.activeExerciseIndex).isActive = true;
                 }
