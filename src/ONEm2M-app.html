@@ -6,9 +6,11 @@
 <link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <!--1m2M Imports-->
 <link rel="import" href="ONEm2M-microphone-sensitivity.html">
 <link rel="import" href="ONEm2M-metronome.html">
+<link rel="import" href="ONEm2M-lesson-configuration.html">
 <link rel="import" href="ONEm2M-chord-change-lesson.html">
 <link rel="import" href="ONEm2M-chord-change-exercise-log.html">
 
@@ -42,12 +44,14 @@
 
         <app-header fixed condenses reveals effects="waterfall">
           <app-toolbar>
-            <div main-title>Chord Change Counter</div>            
+            <div main-title>Chord Change Counter</div>
+            <ONEm2M-lesson-configuration exercise-count="{{exerciseCount}}"></ONEm2M-lesson-configuration>
+            <paper-icon-button id="startPauseLesson" icon="av:play-arrow" on-tap="_toggleLesson"></paper-icon-button>         
             <ONEm2M-microphone-sensitivity></ONEm2M-microphone-sensitivity>
             <ONEm2M-metronome></ONEm2M-metronome>
           </app-toolbar>
         </app-header>
-        <ONEm2M-chord-change-lesson></ONEm2M-chord-change-lesson>
+        <ONEm2M-chord-change-lesson id="lesson" exercise-count="{{exerciseCount}}"></ONEm2M-chord-change-lesson>
         <ONEm2M-chord-change-exercise-log></ONEm2M-chord-change-exercise-log>            
       </app-header-layout>
     </app-drawer-layout>
@@ -55,7 +59,25 @@
 
   <script>
     Polymer({
-      is: 'ONEm2M-app'            
+      is: 'ONEm2M-app',
+      properties: {
+        exerciseCount: {
+            type: Number,
+            notify: true
+        },
+        isPracticing: {
+          type: Boolean,
+          value: false
+        }
+      },
+      //_private members
+      _toggleLesson: function() {
+        this.isPracticing = !this.isPracticing;
+        this.$.startPauseLesson.icon= (this.isPracticing) ? "av:pause" : "av:play-arrow";
+        if (this.isPracticing) {
+          this.$.lesson.startLesson();
+        }
+      }
     });
   </script>
 </dom-module>

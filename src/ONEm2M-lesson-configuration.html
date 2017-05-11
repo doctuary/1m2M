@@ -1,0 +1,51 @@
+<!--Polymer Imports-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+
+<dom-module id="ONEm2M-lesson-configuration">
+  <template>
+      <style>
+        paper-input {
+            display: inline-block;
+            margin-left: 1em;
+            --paper-input-container-color: var(--light-primary-color);
+            --paper-input-container-focus-color: var(--accent-color);
+            --paper-input-container-input-color: var(--text-primary-color);
+        }
+        paper-icon-button {
+            display: inline-block;
+            vertical-align: center;
+        }
+      </style>
+      <paper-input type="number" label="Exercises" value="{{exerciseCount}}"></paper-input>
+      <paper-icon-button on-tap="_changeCombos" icon="refresh">New Routine</paper-icon-button>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'ONEm2M-lesson-configuration',
+
+      properties: {
+          exerciseCount: {
+              type: Number,              
+              notify: true,
+              observer: "_comboCountChanged",
+              reflectToAttribute: true
+          }          
+      },
+      //lifecycle callbacks
+      attached: function() {
+        this.exerciseCount = 5;
+      },
+      //_private members
+      _changeCombos: function() {
+        //TODO: implement notification so that the app can update the chords in the lesson
+      },
+      _comboCountChanged: function() {
+        //TODO: implement notification so that the app can update the chords in the lesson
+      }
+    });
+  </script>
+</dom-module>
