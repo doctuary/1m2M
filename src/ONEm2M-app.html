@@ -52,8 +52,11 @@
             <paper-icon-button id="saveLesson" icon="save" on-tap="_saveLesson"></paper-icon-button>                   
           </app-toolbar>
         </app-header>
+
         <ONEm2M-chord-change-lesson id="lesson" exercise-count="{{exerciseCount}}"></ONEm2M-chord-change-lesson>
-        <ONEm2M-chord-change-exercise-log></ONEm2M-chord-change-exercise-log>            
+        
+        <ONEm2M-chord-change-exercise-log id="log"></ONEm2M-chord-change-exercise-log>
+
       </app-header-layout>
     </app-drawer-layout>
   </template>
@@ -66,7 +69,7 @@
             type: Number,
             notify: true
         },
-        isPracticing: {
+        isStudentPracticing: {
           type: Boolean,
           value: false
         }
@@ -76,9 +79,9 @@
         this.$.lesson.saveLesson();
       },
       _toggleLesson: function() {
-        this.isPracticing = !this.isPracticing;
-        this.$.startPauseLesson.icon= (this.isPracticing) ? "av:pause" : "av:play-arrow";
-        if (this.isPracticing) {
+        this.isStudentPracticing = !this.isStudentPracticing;
+        this.$.startPauseLesson.icon= (this.isStudentPracticing) ? "av:pause" : "av:play-arrow";
+        if (this.isStudentPracticing) {
           this.$.lesson.startLesson();
         }
       }

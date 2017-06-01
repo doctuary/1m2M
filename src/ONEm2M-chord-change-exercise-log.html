@@ -10,11 +10,13 @@
         .table {                   
             background-color: var(--primary-background-color);
             width: 100%;
+            max-height: 480px;            
+            overflow-y: auto;
             border-style: solid;
             border-width: 2px;
             border-color: black;
-            border-radius: 12px;
-        }
+            border-radius: 12px;            
+        }      
         .row {
             margin: 4px;
         }
@@ -27,15 +29,15 @@
             text-align: center;
         }
     </style>    
-    <div class="table">
-      <header class="row">
-        <div class="cell">Start Time</div>
-        <div class="cell">Length</div>
-        <div class="cell">Chord 1</div>
-        <div class="cell">Chord 2</div>
-        <div class="cell">Tempo</div>
-        <div class="cell">Strums</div>
-      </header>
+    <header class="row">
+      <div class="cell">Start Time</div>
+      <div class="cell">Length</div>
+      <div class="cell">Chord 1</div>
+      <div class="cell">Chord 2</div>
+      <div class="cell">Tempo</div>
+      <div class="cell">Strums</div>
+    </header>
+    <div class="table">      
       <template id="log" is="dom-repeat" items="{{exercises}}" as="exercise">
         <div id="exercise{{exercise.startTime}}" class="row">
           <div class="cell">{{exercise.startTime}}</div>
@@ -96,7 +98,7 @@
           let tx = db.transaction(storeName, mode);
           return tx.objectStore(storeName);
         }
-        function displayExerciseLog(store) {          
+        function displayExerciseLog(store) {
           console.log("displayExerciseLog");
           
           if (typeof store == "undefined")
@@ -134,6 +136,11 @@
               console.log("No more entries");
               //TAG: pushing doesn't work, the log will expand to show rows for the records, but the field values will all be blank
               //TAG: setting the property directly seems to do the trick              
+              records.sort(function(a,b) {
+                a = new Date(a.startTime);
+                b = new Date(b.startTime);
+                return a > b ? -1 : a < b ? 1 : 0;
+              });
               self.exercises = records;              
             }
           };          
